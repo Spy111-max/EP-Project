@@ -1,0 +1,383 @@
+/* ── Reset & Variables ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green-dark:    #1b5e20;
+  --green-mid:     #388e3c;
+  --green-light:   #a5d6a7;
+  --accent:        #66bb6a;
+  --bg-sidebar:    #1a1f1a;
+  --bg-panel:      #242b24;
+  --text-primary:  #e8f5e9;
+  --text-muted:    #9cba9e;
+  --border:        #2e3d2e;
+  --danger:        #e57373;
+  --warning:       #ffb74d;
+  --radius:        8px;
+  --shadow:        0 2px 12px rgba(0,0,0,0.45);
+  --sidebar-w:     320px;
+  --transition:    0.2s ease;
+}
+
+html, body {
+  height: 100%;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: #111;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────────────── */
+body { display: flex; }
+
+#sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  max-width: var(--sidebar-w);
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  z-index: 1000;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+#map-container {
+  flex: 1;
+  position: relative;
+  height: 100vh;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Sidebar Header ──────────────────────────────────────────────────────── */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--green-dark);
+}
+
+.sidebar-header .logo {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.sidebar-header h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+
+/* ── Panels ──────────────────────────────────────────────────────────────── */
+.panel {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel h2 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+/* ── Form Controls ───────────────────────────────────────────────────────── */
+label:not(.toggle-row) {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  margin-top: 10px;
+}
+
+label:not(.toggle-row):first-of-type { margin-top: 0; }
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  transition: border-color var(--transition);
+  outline: none;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: var(--accent);
+}
+
+select option { background: var(--bg-panel); }
+
+/* Range inputs */
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+#radius-label {
+  font-size: 0.8rem;
+  color: var(--accent);
+  white-space: nowrap;
+  min-width: 38px;
+  text-align: right;
+}
+
+/* ── Primary Button ──────────────────────────────────────────────────────── */
+.btn-primary {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px;
+  background: var(--green-mid);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.btn-primary:hover  { background: var(--accent); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ── Layer Toggles ───────────────────────────────────────────────────────── */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 0;
+  font-size: 0.875rem;
+  user-select: none;
+}
+
+.toggle-row input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.opacity-row {
+  margin-top: 12px;
+}
+
+.opacity-row label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+/* ── Stats Panel ─────────────────────────────────────────────────────────── */
+#stats-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.stat-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  text-align: center;
+}
+
+.stat-card .stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-card .stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.confidence-bar {
+  grid-column: 1 / -1;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+}
+
+.confidence-bar .bar-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bar-track {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e53935, #ffb300, #43a047);
+  transition: width 0.6s ease;
+}
+
+/* ── Zones List ──────────────────────────────────────────────────────────── */
+#zones-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.zone-item {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.zone-item:hover {
+  border-color: var(--accent);
+  background: #2d352d;
+}
+
+.zone-item .zone-type {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.zone-item .zone-score {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.zone-item .zone-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────────────────── */
+#spinner {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  z-index: 900;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.spinner-inner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Toast ───────────────────────────────────────────────────────────────── */
+#toast {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1100;
+  white-space: nowrap;
+}
+
+#toast.show { opacity: 1; }
+#toast.error { border-color: var(--danger); color: var(--danger); }
+
+/* ── Leaflet overrides ───────────────────────────────────────────────────── */
+.leaflet-control-geocoder {
+  background: var(--bg-panel) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.leaflet-control-geocoder-form input {
+  background: var(--bg-panel) !important;
+  color: var(--text-primary) !important;
+  border: none !important;
+}
+
+/* Score popup */
+.zone-popup h3 { margin-bottom: 4px; font-size: 0.9rem; }
+.zone-popup .score-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: #43a047;
+  color: #fff;
+}
+.zone-popup .score-badge.medium { background: #ffb300; color: #111; }
+.zone-popup .score-badge.low    { background: #e53935; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  :root { --sidebar-w: 100vw; }
+  body { flex-direction: column; }
+  #sidebar { width: 100%; height: auto; max-height: 50vh; min-width: unset; }
+  #map-container { flex: 1; height: auto; }
+}
