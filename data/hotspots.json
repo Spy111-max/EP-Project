@@ -1,0 +1,443 @@
+[
+  {
+    "id": "zone-delhi-01",
+    "name": "Anand Vihar Corridor",
+    "city": "Delhi",
+    "country": "India",
+    "lat": 28.6468,
+    "lon": 77.3152,
+    "zone_type": "traffic",
+    "pollution": {
+      "pm25": 142,
+      "pm10": 238,
+      "nox": 94,
+      "sox": 56,
+      "co2": 690
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 780,
+      "temperature_c": 29
+    }
+  },
+  {
+    "id": "zone-delhi-02",
+    "name": "Okhla Industrial Cluster",
+    "city": "Delhi",
+    "country": "India",
+    "lat": 28.537,
+    "lon": 77.2711,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 134,
+      "pm10": 224,
+      "nox": 91,
+      "sox": 62,
+      "co2": 705
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 770,
+      "temperature_c": 30
+    }
+  },
+  {
+    "id": "zone-mumbai-01",
+    "name": "Chembur Industrial Belt",
+    "city": "Mumbai",
+    "country": "India",
+    "lat": 19.0522,
+    "lon": 72.8996,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 118,
+      "pm10": 190,
+      "nox": 88,
+      "sox": 72,
+      "co2": 730
+    },
+    "environment": {
+      "soil": "black",
+      "rainfall_mm": 1800,
+      "temperature_c": 30
+    }
+  },
+  {
+    "id": "zone-mumbai-02",
+    "name": "Andheri Transport Spine",
+    "city": "Mumbai",
+    "country": "India",
+    "lat": 19.1197,
+    "lon": 72.8468,
+    "zone_type": "traffic",
+    "pollution": {
+      "pm25": 101,
+      "pm10": 171,
+      "nox": 79,
+      "sox": 44,
+      "co2": 650
+    },
+    "environment": {
+      "soil": "black",
+      "rainfall_mm": 1750,
+      "temperature_c": 30
+    }
+  },
+  {
+    "id": "zone-bengaluru-01",
+    "name": "Silk Board Junction",
+    "city": "Bengaluru",
+    "country": "India",
+    "lat": 12.9177,
+    "lon": 77.6238,
+    "zone_type": "traffic",
+    "pollution": {
+      "pm25": 92,
+      "pm10": 162,
+      "nox": 70,
+      "sox": 39,
+      "co2": 610
+    },
+    "environment": {
+      "soil": "red",
+      "rainfall_mm": 970,
+      "temperature_c": 25
+    }
+  },
+  {
+    "id": "zone-hyderabad-01",
+    "name": "Patancheru Industrial Pocket",
+    "city": "Hyderabad",
+    "country": "India",
+    "lat": 17.5323,
+    "lon": 78.2652,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 97,
+      "pm10": 166,
+      "nox": 74,
+      "sox": 41,
+      "co2": 620
+    },
+    "environment": {
+      "soil": "red",
+      "rainfall_mm": 840,
+      "temperature_c": 29
+    }
+  },
+  {
+    "id": "zone-chennai-01",
+    "name": "Ennore Port-Industrial Belt",
+    "city": "Chennai",
+    "country": "India",
+    "lat": 13.2326,
+    "lon": 80.3216,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 88,
+      "pm10": 148,
+      "nox": 69,
+      "sox": 46,
+      "co2": 600
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 1380,
+      "temperature_c": 31
+    }
+  },
+  {
+    "id": "zone-kolkata-01",
+    "name": "Howrah Freight Corridor",
+    "city": "Kolkata",
+    "country": "India",
+    "lat": 22.5958,
+    "lon": 88.2636,
+    "zone_type": "traffic",
+    "pollution": {
+      "pm25": 108,
+      "pm10": 183,
+      "nox": 82,
+      "sox": 48,
+      "co2": 668
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 1530,
+      "temperature_c": 29
+    }
+  },
+  {
+    "id": "zone-ahmedabad-01",
+    "name": "Naroda GIDC Strip",
+    "city": "Ahmedabad",
+    "country": "India",
+    "lat": 23.0742,
+    "lon": 72.657,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 91,
+      "pm10": 170,
+      "nox": 71,
+      "sox": 43,
+      "co2": 612
+    },
+    "environment": {
+      "soil": "sandy",
+      "rainfall_mm": 780,
+      "temperature_c": 32
+    }
+  },
+  {
+    "id": "zone-pune-01",
+    "name": "Hinjewadi Mobility Hub",
+    "city": "Pune",
+    "country": "India",
+    "lat": 18.5912,
+    "lon": 73.7389,
+    "zone_type": "traffic",
+    "pollution": {
+      "pm25": 84,
+      "pm10": 146,
+      "nox": 64,
+      "sox": 36,
+      "co2": 588
+    },
+    "environment": {
+      "soil": "black",
+      "rainfall_mm": 960,
+      "temperature_c": 28
+    }
+  },
+  {
+    "id": "zone-surat-01",
+    "name": "Hazira Industrial Arc",
+    "city": "Surat",
+    "country": "India",
+    "lat": 21.108,
+    "lon": 72.6479,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 87,
+      "pm10": 152,
+      "nox": 67,
+      "sox": 42,
+      "co2": 599
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 1210,
+      "temperature_c": 31
+    }
+  },
+  {
+    "id": "zone-bhopal-01",
+    "name": "Govindpura Manufacturing Zone",
+    "city": "Bhopal",
+    "country": "India",
+    "lat": 23.2599,
+    "lon": 77.4126,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 79,
+      "pm10": 141,
+      "nox": 58,
+      "sox": 34,
+      "co2": 570
+    },
+    "environment": {
+      "soil": "black",
+      "rainfall_mm": 1090,
+      "temperature_c": 27
+    }
+  },
+  {
+    "id": "zone-lucknow-01",
+    "name": "Gomti Nagar Residential Block",
+    "city": "Lucknow",
+    "country": "India",
+    "lat": 26.8501,
+    "lon": 80.992,
+    "zone_type": "residential",
+    "pollution": {
+      "pm25": 76,
+      "pm10": 135,
+      "nox": 55,
+      "sox": 28,
+      "co2": 540
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 950,
+      "temperature_c": 27
+    }
+  },
+  {
+    "id": "zone-kanpur-01",
+    "name": "Panki Thermal-Industrial Corridor",
+    "city": "Kanpur",
+    "country": "India",
+    "lat": 26.4499,
+    "lon": 80.3319,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 113,
+      "pm10": 194,
+      "nox": 85,
+      "sox": 52,
+      "co2": 681
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 890,
+      "temperature_c": 28
+    }
+  },
+  {
+    "id": "zone-patna-01",
+    "name": "Kankarbagh Traffic Grid",
+    "city": "Patna",
+    "country": "India",
+    "lat": 25.5941,
+    "lon": 85.1376,
+    "zone_type": "traffic",
+    "pollution": {
+      "pm25": 104,
+      "pm10": 182,
+      "nox": 77,
+      "sox": 45,
+      "co2": 648
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 1140,
+      "temperature_c": 28
+    }
+  },
+  {
+    "id": "zone-jaipur-01",
+    "name": "Sitapura Peri-Urban Fringe",
+    "city": "Jaipur",
+    "country": "India",
+    "lat": 26.7825,
+    "lon": 75.8204,
+    "zone_type": "peri_urban",
+    "pollution": {
+      "pm25": 67,
+      "pm10": 121,
+      "nox": 49,
+      "sox": 25,
+      "co2": 510
+    },
+    "environment": {
+      "soil": "sandy",
+      "rainfall_mm": 640,
+      "temperature_c": 31
+    }
+  },
+  {
+    "id": "zone-chandigarh-01",
+    "name": "Mouli Jagran Mobility Ring",
+    "city": "Chandigarh",
+    "country": "India",
+    "lat": 30.7333,
+    "lon": 76.7794,
+    "zone_type": "traffic",
+    "pollution": {
+      "pm25": 72,
+      "pm10": 128,
+      "nox": 53,
+      "sox": 27,
+      "co2": 534
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 1010,
+      "temperature_c": 24
+    }
+  },
+  {
+    "id": "zone-guwahati-01",
+    "name": "Beltola Urban Fringe",
+    "city": "Guwahati",
+    "country": "India",
+    "lat": 26.1445,
+    "lon": 91.7362,
+    "zone_type": "peri_urban",
+    "pollution": {
+      "pm25": 63,
+      "pm10": 112,
+      "nox": 45,
+      "sox": 24,
+      "co2": 502
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 1700,
+      "temperature_c": 26
+    }
+  },
+  {
+    "id": "zone-kochi-01",
+    "name": "Kalamassery Industrial-Transit Strip",
+    "city": "Kochi",
+    "country": "India",
+    "lat": 10.0468,
+    "lon": 76.3183,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 58,
+      "pm10": 101,
+      "nox": 42,
+      "sox": 22,
+      "co2": 480
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 2950,
+      "temperature_c": 29
+    }
+  },
+  {
+    "id": "zone-bhubaneswar-01",
+    "name": "Mancheswar Industrial Estate",
+    "city": "Bhubaneswar",
+    "country": "India",
+    "lat": 20.2961,
+    "lon": 85.8245,
+    "zone_type": "industrial",
+    "pollution": {
+      "pm25": 74,
+      "pm10": 129,
+      "nox": 55,
+      "sox": 31,
+      "co2": 548
+    },
+    "environment": {
+      "soil": "red",
+      "rainfall_mm": 1460,
+      "temperature_c": 30
+    }
+  },
+  {
+    "id": "zone-srinagar-01",
+    "name": "Bemina Urban Transport Node",
+    "city": "Srinagar",
+    "country": "India",
+    "lat": 34.0837,
+    "lon": 74.7973,
+    "zone_type": "traffic",
+    "pollution": {
+      "pm25": 69,
+      "pm10": 119,
+      "nox": 50,
+      "sox": 26,
+      "co2": 520
+    },
+    "environment": {
+      "soil": "alluvial",
+      "rainfall_mm": 730,
+      "temperature_c": 16
+    }
+  }
+]

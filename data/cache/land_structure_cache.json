@@ -1,0 +1,1269 @@
+{
+  "13a6c8adccd96edb2366846ae0ce8a93a642c3b2": {
+    "timestamp": 1776064908.836474,
+    "payload": {
+      "analysis_mode": "satellite_raster",
+      "sources": {
+        "worldcover2021": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "analysis": "classification",
+          "weight": 0.58,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.8115,
+          "family_mix": {
+            "built_up": 0.8115,
+            "agriculture": 0.0088,
+            "green_open": 0.1787,
+            "water": 0.001
+          }
+        },
+        "worldcover2020": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "analysis": "classification",
+          "weight": 0.42,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.7822,
+          "family_mix": {
+            "built_up": 0.7822,
+            "agriculture": 0.0225,
+            "green_open": 0.1924,
+            "water": 0.0029
+          }
+        }
+      },
+      "blended_land_cover_mix": {
+        "built_up": 0.7995,
+        "agriculture": 0.0144,
+        "green_open": 0.1843,
+        "water": 0.0018
+      },
+      "confidence": 0.8664,
+      "confidence_breakdown": {
+        "per_source": {
+          "worldcover2021": {
+            "confidence": 0.8115,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.8115,
+              "agriculture": 0.0088,
+              "green_open": 0.1787,
+              "water": 0.001
+            }
+          },
+          "worldcover2020": {
+            "confidence": 0.7822,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.7822,
+              "agriculture": 0.0225,
+              "green_open": 0.1924,
+              "water": 0.0029
+            }
+          }
+        },
+        "agreement": 0.9707,
+        "average_source_confidence": 0.7969,
+        "combined": 0.8664
+      },
+      "land_feasibility_score": 0.0,
+      "land_classification": "dense_built",
+      "measures": [
+        "Use compact species in medians, sidewalks, and setbacks.",
+        "Reserve large-canopy trees for parks, campuses, and redevelopment parcels.",
+        "Prefer containers, vertical greening, and terrace planting where open pits are limited.",
+        "Prioritize irrigation and root-barrier planning in hardscape zones."
+      ],
+      "sample_count": 2048,
+      "map_layers": [
+        {
+          "id": "worldcover2021",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "opacity": 0.56,
+          "default": true,
+          "analysis_weight": 0.58,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2021"
+        },
+        {
+          "id": "worldcover2020",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "opacity": 0.56,
+          "default": false,
+          "analysis_weight": 0.42,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2020"
+        },
+        {
+          "id": "sentinel_ndvi",
+          "provider": "Sentinel-2 derived",
+          "label": "Sentinel-2 NDVI",
+          "layer": "WORLDCOVER_2021_S2_NDVI",
+          "opacity": 0.42,
+          "default": false,
+          "analysis_weight": 0.0,
+          "tile_url": "/api/land-structure/wms?provider=sentinel_ndvi"
+        }
+      ],
+      "legend": [
+        {
+          "class_code": 10,
+          "label": "Tree cover",
+          "family": "green_open",
+          "color": "#006400"
+        },
+        {
+          "class_code": 20,
+          "label": "Shrubland",
+          "family": "green_open",
+          "color": "#ffbb22"
+        },
+        {
+          "class_code": 30,
+          "label": "Grassland",
+          "family": "green_open",
+          "color": "#ffff4c"
+        },
+        {
+          "class_code": 40,
+          "label": "Cropland",
+          "family": "agriculture",
+          "color": "#f096ff"
+        },
+        {
+          "class_code": 50,
+          "label": "Built-up",
+          "family": "built_up",
+          "color": "#fa0000"
+        },
+        {
+          "class_code": 60,
+          "label": "Bare / sparse vegetation",
+          "family": "green_open",
+          "color": "#b4b4b4"
+        },
+        {
+          "class_code": 80,
+          "label": "Permanent water",
+          "family": "water",
+          "color": "#0064c8"
+        },
+        {
+          "class_code": 90,
+          "label": "Herbaceous wetland",
+          "family": "water",
+          "color": "#0096a0"
+        },
+        {
+          "class_code": 95,
+          "label": "Mangroves",
+          "family": "green_open",
+          "color": "#00cf75"
+        },
+        {
+          "class_code": 100,
+          "label": "Moss and lichen",
+          "family": "green_open",
+          "color": "#fae6a0"
+        }
+      ]
+    }
+  },
+  "2ed3c3975f334c9f4691a75e1592f024fb8e67d7": {
+    "timestamp": 1776064910.4133785,
+    "payload": {
+      "analysis_mode": "satellite_raster",
+      "sources": {
+        "worldcover2021": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "analysis": "classification",
+          "weight": 0.58,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.5439,
+          "family_mix": {
+            "built_up": 0.5439,
+            "agriculture": 0.0264,
+            "green_open": 0.4268,
+            "water": 0.0029
+          }
+        },
+        "worldcover2020": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "analysis": "classification",
+          "weight": 0.42,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.4694,
+          "family_mix": {
+            "built_up": 0.4316,
+            "agriculture": 0.0488,
+            "green_open": 0.5156,
+            "water": 0.0039
+          }
+        }
+      },
+      "blended_land_cover_mix": {
+        "built_up": 0.5007,
+        "agriculture": 0.035,
+        "green_open": 0.461,
+        "water": 0.0033
+      },
+      "confidence": 0.6591,
+      "confidence_breakdown": {
+        "per_source": {
+          "worldcover2021": {
+            "confidence": 0.5439,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.5439,
+              "agriculture": 0.0264,
+              "green_open": 0.4268,
+              "water": 0.0029
+            }
+          },
+          "worldcover2020": {
+            "confidence": 0.4694,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.4316,
+              "agriculture": 0.0488,
+              "green_open": 0.5156,
+              "water": 0.0039
+            }
+          }
+        },
+        "agreement": 0.8878,
+        "average_source_confidence": 0.5067,
+        "combined": 0.6591
+      },
+      "land_feasibility_score": 0.0549,
+      "land_classification": "dense_built",
+      "measures": [
+        "Use compact species in medians, sidewalks, and setbacks.",
+        "Reserve large-canopy trees for parks, campuses, and redevelopment parcels.",
+        "Prefer containers, vertical greening, and terrace planting where open pits are limited.",
+        "Prioritize irrigation and root-barrier planning in hardscape zones."
+      ],
+      "sample_count": 2048,
+      "map_layers": [
+        {
+          "id": "worldcover2021",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "opacity": 0.56,
+          "default": true,
+          "analysis_weight": 0.58,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2021"
+        },
+        {
+          "id": "worldcover2020",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "opacity": 0.56,
+          "default": false,
+          "analysis_weight": 0.42,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2020"
+        },
+        {
+          "id": "sentinel_ndvi",
+          "provider": "Sentinel-2 derived",
+          "label": "Sentinel-2 NDVI",
+          "layer": "WORLDCOVER_2021_S2_NDVI",
+          "opacity": 0.42,
+          "default": false,
+          "analysis_weight": 0.0,
+          "tile_url": "/api/land-structure/wms?provider=sentinel_ndvi"
+        }
+      ],
+      "legend": [
+        {
+          "class_code": 10,
+          "label": "Tree cover",
+          "family": "green_open",
+          "color": "#006400"
+        },
+        {
+          "class_code": 20,
+          "label": "Shrubland",
+          "family": "green_open",
+          "color": "#ffbb22"
+        },
+        {
+          "class_code": 30,
+          "label": "Grassland",
+          "family": "green_open",
+          "color": "#ffff4c"
+        },
+        {
+          "class_code": 40,
+          "label": "Cropland",
+          "family": "agriculture",
+          "color": "#f096ff"
+        },
+        {
+          "class_code": 50,
+          "label": "Built-up",
+          "family": "built_up",
+          "color": "#fa0000"
+        },
+        {
+          "class_code": 60,
+          "label": "Bare / sparse vegetation",
+          "family": "green_open",
+          "color": "#b4b4b4"
+        },
+        {
+          "class_code": 80,
+          "label": "Permanent water",
+          "family": "water",
+          "color": "#0064c8"
+        },
+        {
+          "class_code": 90,
+          "label": "Herbaceous wetland",
+          "family": "water",
+          "color": "#0096a0"
+        },
+        {
+          "class_code": 95,
+          "label": "Mangroves",
+          "family": "green_open",
+          "color": "#00cf75"
+        },
+        {
+          "class_code": 100,
+          "label": "Moss and lichen",
+          "family": "green_open",
+          "color": "#fae6a0"
+        }
+      ]
+    }
+  },
+  "35bfa5c5ed84370812ea28d48bef56cda1537813": {
+    "timestamp": 1776064944.2884238,
+    "payload": {
+      "analysis_mode": "satellite_raster",
+      "sources": {
+        "worldcover2021": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "analysis": "classification",
+          "weight": 0.58,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.5381,
+          "family_mix": {
+            "built_up": 0.5381,
+            "agriculture": 0.1338,
+            "green_open": 0.3203,
+            "water": 0.0078
+          }
+        },
+        "worldcover2020": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "analysis": "classification",
+          "weight": 0.42,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.5127,
+          "family_mix": {
+            "built_up": 0.5127,
+            "agriculture": 0.2266,
+            "green_open": 0.2471,
+            "water": 0.0137
+          }
+        }
+      },
+      "blended_land_cover_mix": {
+        "built_up": 0.5277,
+        "agriculture": 0.1717,
+        "green_open": 0.2904,
+        "water": 0.0102
+      },
+      "confidence": 0.6758,
+      "confidence_breakdown": {
+        "per_source": {
+          "worldcover2021": {
+            "confidence": 0.5381,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.5381,
+              "agriculture": 0.1338,
+              "green_open": 0.3203,
+              "water": 0.0078
+            }
+          },
+          "worldcover2020": {
+            "confidence": 0.5127,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.5127,
+              "agriculture": 0.2266,
+              "green_open": 0.2471,
+              "water": 0.0137
+            }
+          }
+        },
+        "agreement": 0.9013,
+        "average_source_confidence": 0.5254,
+        "combined": 0.6758
+      },
+      "land_feasibility_score": 0.0,
+      "land_classification": "dense_built",
+      "measures": [
+        "Use compact species in medians, sidewalks, and setbacks.",
+        "Reserve large-canopy trees for parks, campuses, and redevelopment parcels.",
+        "Prefer containers, vertical greening, and terrace planting where open pits are limited.",
+        "Prioritize irrigation and root-barrier planning in hardscape zones."
+      ],
+      "sample_count": 2048,
+      "map_layers": [
+        {
+          "id": "worldcover2021",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "opacity": 0.56,
+          "default": true,
+          "analysis_weight": 0.58,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2021"
+        },
+        {
+          "id": "worldcover2020",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "opacity": 0.56,
+          "default": false,
+          "analysis_weight": 0.42,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2020"
+        },
+        {
+          "id": "sentinel_ndvi",
+          "provider": "Sentinel-2 derived",
+          "label": "Sentinel-2 NDVI",
+          "layer": "WORLDCOVER_2021_S2_NDVI",
+          "opacity": 0.42,
+          "default": false,
+          "analysis_weight": 0.0,
+          "tile_url": "/api/land-structure/wms?provider=sentinel_ndvi"
+        }
+      ],
+      "legend": [
+        {
+          "class_code": 10,
+          "label": "Tree cover",
+          "family": "green_open",
+          "color": "#006400"
+        },
+        {
+          "class_code": 20,
+          "label": "Shrubland",
+          "family": "green_open",
+          "color": "#ffbb22"
+        },
+        {
+          "class_code": 30,
+          "label": "Grassland",
+          "family": "green_open",
+          "color": "#ffff4c"
+        },
+        {
+          "class_code": 40,
+          "label": "Cropland",
+          "family": "agriculture",
+          "color": "#f096ff"
+        },
+        {
+          "class_code": 50,
+          "label": "Built-up",
+          "family": "built_up",
+          "color": "#fa0000"
+        },
+        {
+          "class_code": 60,
+          "label": "Bare / sparse vegetation",
+          "family": "green_open",
+          "color": "#b4b4b4"
+        },
+        {
+          "class_code": 80,
+          "label": "Permanent water",
+          "family": "water",
+          "color": "#0064c8"
+        },
+        {
+          "class_code": 90,
+          "label": "Herbaceous wetland",
+          "family": "water",
+          "color": "#0096a0"
+        },
+        {
+          "class_code": 95,
+          "label": "Mangroves",
+          "family": "green_open",
+          "color": "#00cf75"
+        },
+        {
+          "class_code": 100,
+          "label": "Moss and lichen",
+          "family": "green_open",
+          "color": "#fae6a0"
+        }
+      ]
+    }
+  },
+  "1dc0de631f67908fe1ba6b7d5dc65d2b9f2f5bb0": {
+    "timestamp": 1776065001.4158812,
+    "payload": {
+      "analysis_mode": "satellite_raster",
+      "sources": {
+        "worldcover2021": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "analysis": "classification",
+          "weight": 0.58,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.8115,
+          "family_mix": {
+            "built_up": 0.8115,
+            "agriculture": 0.0088,
+            "green_open": 0.1787,
+            "water": 0.001
+          }
+        },
+        "worldcover2020": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "analysis": "classification",
+          "weight": 0.42,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.7822,
+          "family_mix": {
+            "built_up": 0.7822,
+            "agriculture": 0.0225,
+            "green_open": 0.1924,
+            "water": 0.0029
+          }
+        }
+      },
+      "blended_land_cover_mix": {
+        "built_up": 0.7995,
+        "agriculture": 0.0144,
+        "green_open": 0.1843,
+        "water": 0.0018
+      },
+      "confidence": 0.8664,
+      "confidence_breakdown": {
+        "per_source": {
+          "worldcover2021": {
+            "confidence": 0.8115,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.8115,
+              "agriculture": 0.0088,
+              "green_open": 0.1787,
+              "water": 0.001
+            }
+          },
+          "worldcover2020": {
+            "confidence": 0.7822,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.7822,
+              "agriculture": 0.0225,
+              "green_open": 0.1924,
+              "water": 0.0029
+            }
+          }
+        },
+        "agreement": 0.9707,
+        "average_source_confidence": 0.7969,
+        "combined": 0.8664
+      },
+      "land_feasibility_score": 0.0,
+      "land_classification": "dense_built",
+      "measures": [
+        "Use compact species in medians, sidewalks, and setbacks.",
+        "Reserve large-canopy trees for parks, campuses, and redevelopment parcels.",
+        "Prefer containers, vertical greening, and terrace planting where open pits are limited.",
+        "Prioritize irrigation and root-barrier planning in hardscape zones."
+      ],
+      "sample_count": 2048,
+      "map_layers": [
+        {
+          "id": "worldcover2021",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "opacity": 0.56,
+          "default": true,
+          "analysis_weight": 0.58,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2021"
+        },
+        {
+          "id": "worldcover2020",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "opacity": 0.56,
+          "default": false,
+          "analysis_weight": 0.42,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2020"
+        },
+        {
+          "id": "sentinel_ndvi",
+          "provider": "Sentinel-2 derived",
+          "label": "Sentinel-2 NDVI",
+          "layer": "WORLDCOVER_2021_S2_NDVI",
+          "opacity": 0.42,
+          "default": false,
+          "analysis_weight": 0.0,
+          "tile_url": "/api/land-structure/wms?provider=sentinel_ndvi"
+        }
+      ],
+      "legend": [
+        {
+          "class_code": 10,
+          "label": "Tree cover",
+          "family": "green_open",
+          "color": "#006400"
+        },
+        {
+          "class_code": 20,
+          "label": "Shrubland",
+          "family": "green_open",
+          "color": "#ffbb22"
+        },
+        {
+          "class_code": 30,
+          "label": "Grassland",
+          "family": "green_open",
+          "color": "#ffff4c"
+        },
+        {
+          "class_code": 40,
+          "label": "Cropland",
+          "family": "agriculture",
+          "color": "#f096ff"
+        },
+        {
+          "class_code": 50,
+          "label": "Built-up",
+          "family": "built_up",
+          "color": "#fa0000"
+        },
+        {
+          "class_code": 60,
+          "label": "Bare / sparse vegetation",
+          "family": "green_open",
+          "color": "#b4b4b4"
+        },
+        {
+          "class_code": 80,
+          "label": "Permanent water",
+          "family": "water",
+          "color": "#0064c8"
+        },
+        {
+          "class_code": 90,
+          "label": "Herbaceous wetland",
+          "family": "water",
+          "color": "#0096a0"
+        },
+        {
+          "class_code": 95,
+          "label": "Mangroves",
+          "family": "green_open",
+          "color": "#00cf75"
+        },
+        {
+          "class_code": 100,
+          "label": "Moss and lichen",
+          "family": "green_open",
+          "color": "#fae6a0"
+        }
+      ]
+    }
+  },
+  "85d1250830579237d8451d80d413af6bffd3a7eb": {
+    "timestamp": 1776065002.8119733,
+    "payload": {
+      "analysis_mode": "satellite_raster",
+      "sources": {
+        "worldcover2021": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "analysis": "classification",
+          "weight": 0.58,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.5381,
+          "family_mix": {
+            "built_up": 0.5381,
+            "agriculture": 0.1338,
+            "green_open": 0.3203,
+            "water": 0.0078
+          }
+        },
+        "worldcover2020": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "analysis": "classification",
+          "weight": 0.42,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.5127,
+          "family_mix": {
+            "built_up": 0.5127,
+            "agriculture": 0.2266,
+            "green_open": 0.2471,
+            "water": 0.0137
+          }
+        }
+      },
+      "blended_land_cover_mix": {
+        "built_up": 0.5277,
+        "agriculture": 0.1717,
+        "green_open": 0.2904,
+        "water": 0.0102
+      },
+      "confidence": 0.6758,
+      "confidence_breakdown": {
+        "per_source": {
+          "worldcover2021": {
+            "confidence": 0.5381,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.5381,
+              "agriculture": 0.1338,
+              "green_open": 0.3203,
+              "water": 0.0078
+            }
+          },
+          "worldcover2020": {
+            "confidence": 0.5127,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.5127,
+              "agriculture": 0.2266,
+              "green_open": 0.2471,
+              "water": 0.0137
+            }
+          }
+        },
+        "agreement": 0.9013,
+        "average_source_confidence": 0.5254,
+        "combined": 0.6758
+      },
+      "land_feasibility_score": 0.0,
+      "land_classification": "mixed_urban",
+      "measures": [
+        "Mix medium-canopy native trees with compact species near transport corridors.",
+        "Protect vacant plots and convert them into neighborhood green pockets.",
+        "Use linear belts along roads with high NOx and PM loads.",
+        "Cluster plantations to improve canopy continuity and maintenance efficiency."
+      ],
+      "sample_count": 2048,
+      "map_layers": [
+        {
+          "id": "worldcover2021",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "opacity": 0.56,
+          "default": true,
+          "analysis_weight": 0.58,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2021"
+        },
+        {
+          "id": "worldcover2020",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "opacity": 0.56,
+          "default": false,
+          "analysis_weight": 0.42,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2020"
+        },
+        {
+          "id": "sentinel_ndvi",
+          "provider": "Sentinel-2 derived",
+          "label": "Sentinel-2 NDVI",
+          "layer": "WORLDCOVER_2021_S2_NDVI",
+          "opacity": 0.42,
+          "default": false,
+          "analysis_weight": 0.0,
+          "tile_url": "/api/land-structure/wms?provider=sentinel_ndvi"
+        }
+      ],
+      "legend": [
+        {
+          "class_code": 10,
+          "label": "Tree cover",
+          "family": "green_open",
+          "color": "#006400"
+        },
+        {
+          "class_code": 20,
+          "label": "Shrubland",
+          "family": "green_open",
+          "color": "#ffbb22"
+        },
+        {
+          "class_code": 30,
+          "label": "Grassland",
+          "family": "green_open",
+          "color": "#ffff4c"
+        },
+        {
+          "class_code": 40,
+          "label": "Cropland",
+          "family": "agriculture",
+          "color": "#f096ff"
+        },
+        {
+          "class_code": 50,
+          "label": "Built-up",
+          "family": "built_up",
+          "color": "#fa0000"
+        },
+        {
+          "class_code": 60,
+          "label": "Bare / sparse vegetation",
+          "family": "green_open",
+          "color": "#b4b4b4"
+        },
+        {
+          "class_code": 80,
+          "label": "Permanent water",
+          "family": "water",
+          "color": "#0064c8"
+        },
+        {
+          "class_code": 90,
+          "label": "Herbaceous wetland",
+          "family": "water",
+          "color": "#0096a0"
+        },
+        {
+          "class_code": 95,
+          "label": "Mangroves",
+          "family": "green_open",
+          "color": "#00cf75"
+        },
+        {
+          "class_code": 100,
+          "label": "Moss and lichen",
+          "family": "green_open",
+          "color": "#fae6a0"
+        }
+      ]
+    }
+  },
+  "926017dbf56694c6d1b7e180f79fa12bc8789b5e": {
+    "timestamp": 1776065042.8425128,
+    "payload": {
+      "analysis_mode": "satellite_raster",
+      "sources": {
+        "worldcover2021": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "analysis": "classification",
+          "weight": 0.58,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.8115,
+          "family_mix": {
+            "built_up": 0.8115,
+            "agriculture": 0.0088,
+            "green_open": 0.1787,
+            "water": 0.001
+          }
+        },
+        "worldcover2020": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "analysis": "classification",
+          "weight": 0.42,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.7822,
+          "family_mix": {
+            "built_up": 0.7822,
+            "agriculture": 0.0225,
+            "green_open": 0.1924,
+            "water": 0.0029
+          }
+        }
+      },
+      "blended_land_cover_mix": {
+        "built_up": 0.7995,
+        "agriculture": 0.0144,
+        "green_open": 0.1843,
+        "water": 0.0018
+      },
+      "confidence": 0.8664,
+      "confidence_breakdown": {
+        "per_source": {
+          "worldcover2021": {
+            "confidence": 0.8115,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.8115,
+              "agriculture": 0.0088,
+              "green_open": 0.1787,
+              "water": 0.001
+            }
+          },
+          "worldcover2020": {
+            "confidence": 0.7822,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.7822,
+              "agriculture": 0.0225,
+              "green_open": 0.1924,
+              "water": 0.0029
+            }
+          }
+        },
+        "agreement": 0.9707,
+        "average_source_confidence": 0.7969,
+        "combined": 0.8664
+      },
+      "land_feasibility_score": 0.186,
+      "land_classification": "dense_built",
+      "measures": [
+        "Use compact species in medians, sidewalks, and setbacks.",
+        "Reserve large-canopy trees for parks, campuses, and redevelopment parcels.",
+        "Prefer containers, vertical greening, and terrace planting where open pits are limited.",
+        "Prioritize irrigation and root-barrier planning in hardscape zones."
+      ],
+      "sample_count": 2048,
+      "map_layers": [
+        {
+          "id": "worldcover2021",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "opacity": 0.56,
+          "default": true,
+          "analysis_weight": 0.58,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2021"
+        },
+        {
+          "id": "worldcover2020",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "opacity": 0.56,
+          "default": false,
+          "analysis_weight": 0.42,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2020"
+        },
+        {
+          "id": "sentinel_ndvi",
+          "provider": "Sentinel-2 derived",
+          "label": "Sentinel-2 NDVI",
+          "layer": "WORLDCOVER_2021_S2_NDVI",
+          "opacity": 0.42,
+          "default": false,
+          "analysis_weight": 0.0,
+          "tile_url": "/api/land-structure/wms?provider=sentinel_ndvi"
+        }
+      ],
+      "legend": [
+        {
+          "class_code": 10,
+          "label": "Tree cover",
+          "family": "green_open",
+          "color": "#006400"
+        },
+        {
+          "class_code": 20,
+          "label": "Shrubland",
+          "family": "green_open",
+          "color": "#ffbb22"
+        },
+        {
+          "class_code": 30,
+          "label": "Grassland",
+          "family": "green_open",
+          "color": "#ffff4c"
+        },
+        {
+          "class_code": 40,
+          "label": "Cropland",
+          "family": "agriculture",
+          "color": "#f096ff"
+        },
+        {
+          "class_code": 50,
+          "label": "Built-up",
+          "family": "built_up",
+          "color": "#fa0000"
+        },
+        {
+          "class_code": 60,
+          "label": "Bare / sparse vegetation",
+          "family": "green_open",
+          "color": "#b4b4b4"
+        },
+        {
+          "class_code": 80,
+          "label": "Permanent water",
+          "family": "water",
+          "color": "#0064c8"
+        },
+        {
+          "class_code": 90,
+          "label": "Herbaceous wetland",
+          "family": "water",
+          "color": "#0096a0"
+        },
+        {
+          "class_code": 95,
+          "label": "Mangroves",
+          "family": "green_open",
+          "color": "#00cf75"
+        },
+        {
+          "class_code": 100,
+          "label": "Moss and lichen",
+          "family": "green_open",
+          "color": "#fae6a0"
+        }
+      ]
+    }
+  },
+  "7e0766060714b7aec3cabd0748db27300ed42998": {
+    "timestamp": 1776065044.8343399,
+    "payload": {
+      "analysis_mode": "satellite_raster",
+      "sources": {
+        "worldcover2021": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "analysis": "classification",
+          "weight": 0.58,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.5381,
+          "family_mix": {
+            "built_up": 0.5381,
+            "agriculture": 0.1338,
+            "green_open": 0.3203,
+            "water": 0.0078
+          }
+        },
+        "worldcover2020": {
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "analysis": "classification",
+          "weight": 0.42,
+          "opacity": 0.56,
+          "sample_count": 1024,
+          "dominant_class": 50,
+          "confidence": 0.5127,
+          "family_mix": {
+            "built_up": 0.5127,
+            "agriculture": 0.2266,
+            "green_open": 0.2471,
+            "water": 0.0137
+          }
+        }
+      },
+      "blended_land_cover_mix": {
+        "built_up": 0.5277,
+        "agriculture": 0.1717,
+        "green_open": 0.2904,
+        "water": 0.0102
+      },
+      "confidence": 0.6758,
+      "confidence_breakdown": {
+        "per_source": {
+          "worldcover2021": {
+            "confidence": 0.5381,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.5381,
+              "agriculture": 0.1338,
+              "green_open": 0.3203,
+              "water": 0.0078
+            }
+          },
+          "worldcover2020": {
+            "confidence": 0.5127,
+            "sample_count": 1024,
+            "dominant_class": 50,
+            "family_mix": {
+              "built_up": 0.5127,
+              "agriculture": 0.2266,
+              "green_open": 0.2471,
+              "water": 0.0137
+            }
+          }
+        },
+        "agreement": 0.9013,
+        "average_source_confidence": 0.5254,
+        "combined": 0.6758
+      },
+      "land_feasibility_score": 0.299,
+      "land_classification": "mixed_urban",
+      "measures": [
+        "Mix medium-canopy native trees with compact species near transport corridors.",
+        "Protect vacant plots and convert them into neighborhood green pockets.",
+        "Use linear belts along roads with high NOx and PM loads.",
+        "Cluster plantations to improve canopy continuity and maintenance efficiency."
+      ],
+      "sample_count": 2048,
+      "map_layers": [
+        {
+          "id": "worldcover2021",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2021",
+          "layer": "WORLDCOVER_2021_MAP",
+          "opacity": 0.56,
+          "default": true,
+          "analysis_weight": 0.58,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2021"
+        },
+        {
+          "id": "worldcover2020",
+          "provider": "ESA WorldCover",
+          "label": "ESA WorldCover 2020",
+          "layer": "WORLDCOVER_2020_MAP",
+          "opacity": 0.56,
+          "default": false,
+          "analysis_weight": 0.42,
+          "tile_url": "/api/land-structure/wms?provider=worldcover2020"
+        },
+        {
+          "id": "sentinel_ndvi",
+          "provider": "Sentinel-2 derived",
+          "label": "Sentinel-2 NDVI",
+          "layer": "WORLDCOVER_2021_S2_NDVI",
+          "opacity": 0.42,
+          "default": false,
+          "analysis_weight": 0.0,
+          "tile_url": "/api/land-structure/wms?provider=sentinel_ndvi"
+        }
+      ],
+      "legend": [
+        {
+          "class_code": 10,
+          "label": "Tree cover",
+          "family": "green_open",
+          "color": "#006400"
+        },
+        {
+          "class_code": 20,
+          "label": "Shrubland",
+          "family": "green_open",
+          "color": "#ffbb22"
+        },
+        {
+          "class_code": 30,
+          "label": "Grassland",
+          "family": "green_open",
+          "color": "#ffff4c"
+        },
+        {
+          "class_code": 40,
+          "label": "Cropland",
+          "family": "agriculture",
+          "color": "#f096ff"
+        },
+        {
+          "class_code": 50,
+          "label": "Built-up",
+          "family": "built_up",
+          "color": "#fa0000"
+        },
+        {
+          "class_code": 60,
+          "label": "Bare / sparse vegetation",
+          "family": "green_open",
+          "color": "#b4b4b4"
+        },
+        {
+          "class_code": 80,
+          "label": "Permanent water",
+          "family": "water",
+          "color": "#0064c8"
+        },
+        {
+          "class_code": 90,
+          "label": "Herbaceous wetland",
+          "family": "water",
+          "color": "#0096a0"
+        },
+        {
+          "class_code": 95,
+          "label": "Mangroves",
+          "family": "green_open",
+          "color": "#00cf75"
+        },
+        {
+          "class_code": 100,
+          "label": "Moss and lichen",
+          "family": "green_open",
+          "color": "#fae6a0"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "trained": true,
+  "algorithm": "RandomForestRegressor",
+  "trained_at": "2026-04-13T06:15:58.150767+00:00",
+  "samples": 609,
+  "features": 29,
+  "metrics": {
+    "r2": 0.89337,
+    "mae": 0.02477
+  },
+  "factors": [
+    "pollution PM2.5/PM10/NOx/SOx/CO2",
+    "soil compatibility",
+    "rainfall and temperature match",
+    "species growth category",
+    "carbon sequestration potential",
+    "zone type weighting"
+  ]
+}

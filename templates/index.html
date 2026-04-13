@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PSAS | Tree planning with a lighter touch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="overline">Urban Ecology Intelligence</p>
+        <h1>Grow cleaner air without the homework.</h1>
+        <p class="subtitle">
+          Spot the rough zones, pick the right trees, and see what changes over time in a way that feels calm and readable.
+        </p>
+        <p class="hero-note">
+          Choose a city or tap a marker. The map, species match, and all six tools will follow that zone.
+        </p>
+      </div>
+      <div class="search-stack">
+        <label for="search-input">Search city or zone</label>
+        <input id="search-input" type="text" placeholder="Delhi, Mumbai, traffic, industrial..." />
+        <button id="search-btn">Analyze</button>
+        <div class="quick-picks" aria-label="Quick city picks">
+          <button class="quick-pick" type="button" data-city="Delhi">Delhi</button>
+          <button class="quick-pick" type="button" data-city="Mumbai">Mumbai</button>
+          <button class="quick-pick" type="button" data-city="Bengaluru">Bengaluru</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="panel map-panel">
+        <div class="panel-header">
+          <h2>Pollution Hotspots</h2>
+          <div class="header-stack">
+            <span id="map-mode" class="chip">Viewport AI Mode</span>
+            <span id="land-layer-status" class="chip muted">Satellite overlay</span>
+            <span id="zone-counter" class="chip">0 zones</span>
+          </div>
+        </div>
+        <div class="kpi-grid">
+          <article class="kpi">
+            <p class="kpi-label">Avg PM2.5</p>
+            <p id="kpi-pm25" class="kpi-value">-</p>
+          </article>
+          <article class="kpi">
+            <p class="kpi-label">Urgency Avg</p>
+            <p id="kpi-urgency" class="kpi-value">-</p>
+          </article>
+          <article class="kpi">
+            <p class="kpi-label">Visible Zones</p>
+            <p id="kpi-visible" class="kpi-value">-</p>
+          </article>
+          <article class="kpi">
+            <p class="kpi-label">Planting Target</p>
+            <p id="kpi-trees" class="kpi-value">-</p>
+          </article>
+        </div>
+        <div id="map"></div>
+      </section>
+
+      <section class="panel recommendations-panel">
+        <div class="panel-header">
+          <h2>Species Recommendation</h2>
+          <span id="active-zone" class="chip muted">Viewport selection</span>
+        </div>
+        <div id="land-insights" class="land-insights"></div>
+        <div class="dual-columns">
+          <div>
+            <h3>Fast-Growing Species</h3>
+            <ul id="fast-list" class="species-list"></ul>
+          </div>
+          <div>
+            <h3>Long-Term Species</h3>
+            <ul id="long-list" class="species-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel impact-panel">
+        <div class="panel-header">
+          <h2>Impact Forecast</h2>
+          <span class="chip">5-20 Year Outlook</span>
+        </div>
+        <div class="metrics-strip">
+          <div>
+            <p>Current PM2.5</p>
+            <strong id="base-pm25">-</strong>
+          </div>
+          <div>
+            <p>Projected PM2.5 (20Y)</p>
+            <strong id="future-pm25">-</strong>
+          </div>
+          <div>
+            <p>Carbon Capture (20Y)</p>
+            <strong id="future-carbon">-</strong>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="aqiChart"></canvas>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="carbonChart"></canvas>
+        </div>
+      </section>
+
+      <section class="panel features-panel">
+        <div class="panel-header">
+          <h2>Advanced Features</h2>
+          <span class="chip">6 Unique Tools</span>
+        </div>
+        <div class="feature-tabs">
+          <button class="feature-tab active" data-tab="synergy">Synergy</button>
+          <button class="feature-tab" data-tab="timeline">Timeline</button>
+          <button class="feature-tab" data-tab="pollutant">Pollutant</button>
+          <button class="feature-tab" data-tab="microclimate">Blocks</button>
+          <button class="feature-tab" data-tab="maintenance">Care</button>
+          <button class="feature-tab" data-tab="radius">Radius</button>
+        </div>
+
+        <!-- Synergy Feature -->
+        <div id="synergy-tab" class="feature-content active">
+          <h3>Species Synergy</h3>
+          <p>Plant combinations that work together. Higher scores = better compatibility.</p>
+          <ul id="synergy-list" class="feature-list"></ul>
+        </div>
+
+        <!-- Timeline Feature -->
+        <div id="timeline-tab" class="feature-content">
+          <h3>10-Year Projection</h3>
+          <canvas id="timelineChart" height="100"></canvas>
+          <div id="timeline-stats" class="metrics-strip"></div>
+        </div>
+
+        <!-- Pollutant Feature -->
+        <div id="pollutant-tab" class="feature-content">
+          <h3>Pollutant Focus</h3>
+          <div id="pollutant-profile" class="feature-list"></div>
+        </div>
+
+        <!-- Microclimate Feature -->
+        <div id="microclimate-tab" class="feature-content">
+          <h3>Microclimate Blocks (3x3)</h3>
+          <div id="microclimate-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;"></div>
+        </div>
+
+        <!-- Maintenance Feature -->
+        <div id="maintenance-tab" class="feature-content">
+          <h3>Care Calendar</h3>
+          <div id="maintenance-calendar" class="feature-list"></div>
+        </div>
+
+        <!-- Impact Radius Feature -->
+        <div id="radius-tab" class="feature-content">
+          <h3>Impact Radius Map</h3>
+          <p>Geographic reach of air quality improvement.</p>
+          <canvas id="radiusChart" height="100"></canvas>
+          <div id="radius-stats" class="metrics-strip"></div>
+        </div>
+      </section>
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

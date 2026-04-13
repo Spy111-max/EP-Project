@@ -1,0 +1,8 @@
+[
+  {"region": "North Plains", "dominant_soil": "alluvial", "ph_range": "6.5-8.0", "organic_matter": "medium"},
+  {"region": "Western Dry", "dominant_soil": "sandy", "ph_range": "7.2-8.8", "organic_matter": "low"},
+  {"region": "Deccan Plateau", "dominant_soil": "black", "ph_range": "6.8-8.2", "organic_matter": "medium"},
+  {"region": "Eastern Belt", "dominant_soil": "alluvial", "ph_range": "6.0-7.8", "organic_matter": "high"},
+  {"region": "Southern Peninsula", "dominant_soil": "red", "ph_range": "5.8-7.5", "organic_matter": "medium"},
+  {"region": "Coastal Humid", "dominant_soil": "alluvial", "ph_range": "5.5-7.2", "organic_matter": "high"}
+]

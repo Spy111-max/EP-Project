@@ -1,0 +1,14 @@
+[
+  {"city": "Delhi", "annual_rainfall_mm": 780, "mean_temp_c": 29},
+  {"city": "Mumbai", "annual_rainfall_mm": 1800, "mean_temp_c": 30},
+  {"city": "Bengaluru", "annual_rainfall_mm": 970, "mean_temp_c": 25},
+  {"city": "Hyderabad", "annual_rainfall_mm": 840, "mean_temp_c": 29},
+  {"city": "Chennai", "annual_rainfall_mm": 1380, "mean_temp_c": 31},
+  {"city": "Kolkata", "annual_rainfall_mm": 1530, "mean_temp_c": 29},
+  {"city": "Ahmedabad", "annual_rainfall_mm": 780, "mean_temp_c": 32},
+  {"city": "Pune", "annual_rainfall_mm": 960, "mean_temp_c": 28},
+  {"city": "Lucknow", "annual_rainfall_mm": 950, "mean_temp_c": 27},
+  {"city": "Jaipur", "annual_rainfall_mm": 640, "mean_temp_c": 31},
+  {"city": "Kochi", "annual_rainfall_mm": 2950, "mean_temp_c": 29},
+  {"city": "Srinagar", "annual_rainfall_mm": 730, "mean_temp_c": 16}
+]
