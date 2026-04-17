@@ -25,7 +25,7 @@ export default {
         card: "0 8px 24px -18px rgba(15, 23, 42, 0.4)",
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui"],
+        sans: ["Public Sans", "Inter", "ui-sans-serif", "system-ui"],
       },
     },
   },

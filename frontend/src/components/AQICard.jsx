@@ -11,7 +11,7 @@ export default function AQICard({ label, value, unit, hint }) {
     <motion.article
       whileHover={cardHover}
       whileTap={{ scale: 0.995 }}
-      className={`border border-slate-300 bg-gradient-to-br ${band.tone} p-3 shadow-sm dark:border-slate-700 dark:from-slate-900 dark:to-slate-800`}
+      className={`border border-slate-300 bg-gradient-to-br ${band.tone} p-3 shadow-sm dark:border-slate-700 dark:from-slate-900 dark:via-slate-800 dark:to-slate-800`}
     >
       <div className="mb-3 flex items-center justify-between">
         <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">{label}</p>
@@ -28,7 +28,7 @@ export default function AQICard({ label, value, unit, hint }) {
           <motion.p
             initial={{ opacity: 0, y: 4 }}
             whileInView={{ opacity: 0 }}
-            className="pointer-events-none absolute right-0 top-5 z-20 w-40 border border-slate-700 bg-slate-950 px-2 py-1 text-[11px] text-slate-100 opacity-0 shadow-lg transition-all duration-200 group-hover:opacity-100 dark:bg-slate-100 dark:text-slate-900"
+            className="pointer-events-none absolute right-0 top-5 z-20 w-40 border border-slate-700 bg-slate-950 px-2 py-1 text-[11px] text-slate-100 opacity-0 shadow-lg transition-all duration-200 group-hover:opacity-100 dark:border-slate-300 dark:bg-slate-100 dark:text-slate-900"
           >
             {hint}
           </motion.p>

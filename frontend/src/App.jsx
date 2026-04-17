@@ -37,6 +37,30 @@ export default function App() {
     () => Object.values(cityInsights).flatMap((insight) => insight.hotspots || []),
     [],
   );
+  const baselineRecommendations = useMemo(() => {
+    const bestByName = new Map();
+
+    Object.values(cityInsights).forEach((insight) => {
+      (insight.recommendations || []).forEach((item) => {
+        const key = item.commonName || item.id;
+        const current = bestByName.get(key);
+        if (!current || item.match > current.match) {
+          bestByName.set(key, item);
+        }
+      });
+    });
+
+    return Array.from(bestByName.values())
+      .sort((left, right) => right.match - left.match)
+      .slice(0, 4)
+      .map((item, index) => ({
+        ...item,
+        id: `baseline-${item.id || index}`,
+      }));
+  }, []);
+
+  const visibleRecommendations =
+    selectedInsight?.recommendations?.length ? selectedInsight.recommendations : baselineRecommendations;
 
   const executiveSummary = useMemo(() => {
     const insights = Object.values(cityInsights);
@@ -52,7 +76,7 @@ export default function App() {
         id: "national-aqi",
         label: "AQI Index",
         value: nationalAqi,
-        suffix: "National Average",
+        suffix: "Average",
         tone: "text-danger-700",
       },
       {
@@ -66,7 +90,7 @@ export default function App() {
         id: "plantations",
         label: "Active Tree Plantations",
         value: `${(totalPlantationCandidates * 750).toLocaleString()}`,
-        suffix: "National Program",
+        suffix: "Program",
         tone: "text-brand-700",
       },
       {
@@ -95,38 +119,12 @@ export default function App() {
       variants={pageVariants}
       initial="hidden"
       animate="visible"
-      className="min-h-screen bg-slate-100 pb-6 transition-colors duration-300 dark:bg-slate-950"
+      className="min-h-screen bg-slate-100 pb-6 dark:bg-slate-950"
     >
       <Navbar darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />
 
       <div className="mx-auto mt-3 grid max-w-[1440px] gap-3 px-4 md:px-6">
         <motion.main variants={sectionStaggerVariants} initial="hidden" animate="visible" className="space-y-4">
-          <motion.section variants={sectionVariants} className="border border-brand-900 bg-brand-900 px-4 py-4 text-white shadow-card">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-4xl">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-brand-100/80">National Environmental Monitoring Dashboard</p>
-                <h2 className="mt-1 text-2xl font-bold tracking-tight md:text-3xl">Structured air quality and reforestation command view</h2>
-                <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-200">
-                  Search any of the 31 supported Indian cities to load city-specific AQI data, trend charts, hotspot overlays, and tree recommendations.
-                </p>
-              </div>
-              <div className="grid gap-2 text-sm sm:grid-cols-3 lg:min-w-[420px] lg:text-right">
-                <div className="border border-slate-700 bg-slate-950/40 px-3 py-2">
-                  <p className="text-[11px] uppercase tracking-wide text-slate-400">Coverage</p>
-                  <p className="mt-1 font-semibold text-white">31 cities in India</p>
-                </div>
-                <div className="border border-slate-700 bg-slate-950/40 px-3 py-2">
-                  <p className="text-[11px] uppercase tracking-wide text-slate-400">Current View</p>
-                  <p className="mt-1 font-semibold text-white">{selectedCity?.name || "National aggregate"}</p>
-                </div>
-                <div className="border border-slate-700 bg-slate-950/40 px-3 py-2">
-                  <p className="text-[11px] uppercase tracking-wide text-slate-400">Mode</p>
-                  <p className="mt-1 font-semibold text-white">Live monitoring</p>
-                </div>
-              </div>
-            </div>
-          </motion.section>
-
           <motion.section variants={sectionVariants} className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
             {executiveSummary.map((card) => (
               <article
@@ -134,7 +132,7 @@ export default function App() {
                 className="border border-slate-300 bg-white px-4 py-3 shadow-sm dark:border-slate-700 dark:bg-slate-900"
               >
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">{card.label}</p>
-                <p className={`mt-2 text-2xl font-extrabold tracking-tight ${card.tone}`}>{card.value}</p>
+                <p className={`mt-2 text-2xl font-extrabold tracking-tight ${card.id === "plantations" ? "font-mono" : ""} ${card.tone}`}>{card.value}</p>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{card.suffix}</p>
               </article>
             ))}
@@ -150,6 +148,7 @@ export default function App() {
                 cities={cityCatalog}
                 selectedCity={selectedCity}
                 hotspots={allHotspots}
+                selectedHotspots={selectedInsight?.hotspots || []}
                 onSelectCity={setSelectedCityId}
               />
             </div>
@@ -186,7 +185,11 @@ export default function App() {
               </motion.div>
             ) : (
               <motion.div key="recommendation-content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <TreeRecommendationsPanel recommendations={selectedInsight?.recommendations || []} />
+                <TreeRecommendationsPanel
+                  recommendations={visibleRecommendations}
+                  isPersonalized={Boolean(selectedCityId)}
+                  selectedCityName={selectedCity?.name}
+                />
               </motion.div>
             )}
           </AnimatePresence>

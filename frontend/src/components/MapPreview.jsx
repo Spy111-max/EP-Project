@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker, Rectangle } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Circle } from "react-leaflet";
 import { cardHover } from "../animations/variants";
 import { Layers3 } from "lucide-react";
 
-export default function MapPreview({ cities, selectedCity, hotspots, onSelectCity }) {
+export default function MapPreview({ cities, selectedCity, hotspots, selectedHotspots, onSelectCity }) {
   const [baseLayer, setBaseLayer] = useState("grayscale");
-  const [viewMode, setViewMode] = useState("standard");
+  const [showPollutionDensity, setShowPollutionDensity] = useState(true);
+  const hasSelectedCity = Boolean(selectedCity?.id);
 
   const indiaBounds = [
     [6.0, 68.0],
@@ -18,6 +19,15 @@ export default function MapPreview({ cities, selectedCity, hotspots, onSelectCit
   const mapZoom = selectedCity ? 7 : 5;
   const minZoom = 4;
   const maxZoom = 12;
+  const lastUpdated = new Date().toLocaleString("en-IN", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
 
   function isValidLatLng(value) {
     return (
@@ -42,64 +52,88 @@ export default function MapPreview({ cities, selectedCity, hotspots, onSelectCit
       ...spot,
       safePosition: [Number(spot.position[0]), Number(spot.position[1])],
       safeAqi: Number.isFinite(spot.aqi) ? spot.aqi : 100,
+      safeColor: typeof spot.color === "string" ? spot.color : null,
     }));
 
-  function getPollutionGrey(aqi) {
-    if (aqi <= 50) return "#f5f5f5";
-    if (aqi <= 80) return "#e5e7eb";
-    if (aqi <= 110) return "#d1d5db";
-    if (aqi <= 140) return "#9ca3af";
-    if (aqi <= 170) return "#6b7280";
-    if (aqi <= 210) return "#4b5563";
-    return "#1f2937";
+  const safeSelectedHotspots = (selectedHotspots || [])
+    .filter((spot) => isValidLatLng(spot.position))
+    .map((spot) => ({
+      ...spot,
+      safePosition: [Number(spot.position[0]), Number(spot.position[1])],
+      safeAqi: Number.isFinite(spot.aqi) ? spot.aqi : 100,
+      safeColor: typeof spot.color === "string" ? spot.color : null,
+    }));
+
+  function getGrayDensityColor(aqi) {
+    if (aqi >= 170) return "#1f1f1f";
+    if (aqi >= 140) return "#404040";
+    if (aqi >= 110) return "#737373";
+    return "#d4d4d4";
   }
 
-  function estimateCellAqi(lat, lon) {
-    if (!safeHotspots.length) return 0;
-
-    let weightedAqi = 0;
-    let totalWeight = 0;
-
-    safeHotspots.forEach((spot) => {
-      const dLat = lat - spot.safePosition[0];
-      const dLon = lon - spot.safePosition[1];
-      const distance = Math.sqrt(dLat * dLat + dLon * dLon);
-      const weight = 1 / (distance * distance + 0.14);
-      weightedAqi += spot.safeAqi * weight;
-      totalWeight += weight;
-    });
-
-    return totalWeight ? weightedAqi / totalWeight : 0;
+  function getGrayDensityColor(aqi) {
+    if (aqi >= 170) return "#1f1f1f";
+    if (aqi >= 140) return "#404040";
+    if (aqi >= 110) return "#737373";
+    return "#d4d4d4";
   }
 
-  const densityCells = useMemo(() => {
-    const latStep = 1.35;
-    const lonStep = 1.35;
-    const cells = [];
+  const circleRadius = 30;
 
-    for (let lat = 6.0; lat < 38.5; lat += latStep) {
-      for (let lon = 68.0; lon < 97.5; lon += lonStep) {
-        const centerLat = lat + latStep / 2;
-        const centerLon = lon + lonStep / 2;
-        const estimatedAqi = estimateCellAqi(centerLat, centerLon);
-        if (estimatedAqi < 55) continue;
+  function buildDensityCircle(spot, index, selectedMode) {
+    const aqi = Number.isFinite(spot.safeAqi) ? spot.safeAqi : 100;
+    const color = getGrayDensityColor(aqi);
+    const opacity = selectedMode
+      ? aqi >= 170
+        ? 0.3
+        : aqi >= 140
+          ? 0.26
+          : aqi >= 110
+            ? 0.22
+            : 0.18
+      : aqi >= 170
+        ? 0.28
+        : aqi >= 140
+          ? 0.24
+          : aqi >= 110
+            ? 0.18
+            : 0.12;
 
-        const fillOpacity = Math.min(0.78, Math.max(0.12, (estimatedAqi - 45) / 215));
+    return {
+      id: `${spot.id}-${selectedMode ? "selected" : "neutral"}-${index}`,
+      center: spot.safePosition,
+      radius: circleRadius,
+      color,
+      fillOpacity: opacity,
+      weight: selectedMode && aqi >= 140 ? 2 : 1,
+    };
+  }
 
-        cells.push({
-          id: `density-${lat.toFixed(2)}-${lon.toFixed(2)}`,
-          bounds: [
-            [lat, lon],
-            [Math.min(lat + latStep, 38.5), Math.min(lon + lonStep, 97.5)],
-          ],
-          fillColor: getPollutionGrey(estimatedAqi),
-          fillOpacity,
+  const pollutionCircles = useMemo(
+    () => safeSelectedHotspots.map((spot, index) => buildDensityCircle(spot, index, true)),
+    [safeSelectedHotspots],
+  );
+
+  const neutralDensityCircles = useMemo(() => {
+    const cityDotRadius = 6;
+
+    return safeHotspots.length > 0
+      ? safeHotspots.map((spot, index) => {
+          return {
+            ...buildDensityCircle(spot, index, false),
+            radius: cityDotRadius * 5,
+          };
+        })
+      : safeCities.map((city, index) => {
+          return {
+            id: `${city.id}-neutral-density`,
+            center: city.safePosition,
+            radius: cityDotRadius * 5,
+            color: ["#e5e7eb", "#d1d5db", "#cbd5e1", "#9ca3af"][index % 4],
+            fillOpacity: [0.12, 0.15, 0.18, 0.2][index % 4],
+          };
         });
-      }
-    }
-
-    return cells;
-  }, [safeHotspots]);
+  }, [safeCities, safeHotspots]);
 
   const getTileLayer = () => {
     switch (baseLayer) {
@@ -136,34 +170,31 @@ export default function MapPreview({ cities, selectedCity, hotspots, onSelectCit
         </div>
         <div className="flex flex-wrap gap-2">
           <button
-            onClick={() => {
-              setViewMode("standard");
-              setBaseLayer("grayscale");
-            }}
+            onClick={() => setBaseLayer("grayscale")}
             className={`border px-3 py-1.5 text-xs font-semibold transition ${
-              viewMode === "standard" && baseLayer === "grayscale"
+              baseLayer === "grayscale"
                 ? "border-brand-700 bg-brand-700 text-white"
-                : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200"
+                : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
             }`}
           >
-            Standard (Grayscale)
+            Grayscale Basemap
           </button>
           <button
             onClick={() => setBaseLayer("satellite")}
             className={`border px-3 py-1.5 text-xs font-semibold transition ${
               baseLayer === "satellite"
                 ? "border-brand-700 bg-brand-800 text-white"
-                : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200"
+                : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
             }`}
           >
             Satellite
           </button>
           <button
-            onClick={() => setViewMode("pollution-density")}
+            onClick={() => setShowPollutionDensity((prev) => !prev)}
             className={`border px-3 py-1.5 text-xs font-semibold transition ${
-              viewMode === "pollution-density"
+              showPollutionDensity
                 ? "border-brand-700 bg-brand-700 text-white"
-                : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200"
+                : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
             }`}
           >
             Pollution Density
@@ -185,47 +216,55 @@ export default function MapPreview({ cities, selectedCity, hotspots, onSelectCit
         >
           <TileLayer attribution={tileConfig.attribution} url={tileConfig.url} />
 
-          {viewMode === "standard" &&
-            safeCities.map((city) => (
+          {!hasSelectedCity &&
+            neutralDensityCircles.map((layer) => (
               <CircleMarker
-                key={`city-${city.id}`}
-                center={city.safePosition}
-                radius={selectedCity?.id === city.id ? 8 : 6}
+                key={layer.id}
+                center={layer.center}
+                radius={layer.radius}
                 pathOptions={{
-                  color: "#1d4ed8",
-                  fillColor: selectedCity?.id === city.id ? "#1d4ed8" : "#93c5fd",
-                  fillOpacity: 0.95,
-                  weight: 2,
+                  color: layer.color,
+                  fillColor: layer.color,
+                  fillOpacity: layer.fillOpacity,
+                  weight: 1,
                 }}
-                eventHandlers={{ click: () => onSelectCity(city.id) }}
               />
             ))}
 
-          {viewMode === "pollution-density" &&
-            densityCells.map((cell) => (
-              <Rectangle
-                key={cell.id}
-                bounds={cell.bounds}
+          {hasSelectedCity && showPollutionDensity &&
+            pollutionCircles.map((layer) => (
+              <CircleMarker
+                key={layer.id}
+                center={layer.center}
+                radius={layer.radius}
                 pathOptions={{
-                  color: "transparent",
-                  fillColor: cell.fillColor,
-                  fillOpacity: cell.fillOpacity,
-                  weight: 0,
+                  color: layer.color,
+                  fillColor: layer.color,
+                  fillOpacity: layer.fillOpacity,
+                  weight: layer.weight,
                 }}
               />
             ))}
+
+          {safeCities.map((city) => (
+            <CircleMarker
+              key={`city-${city.id}`}
+              center={city.safePosition}
+              radius={selectedCity?.id === city.id ? 8 : 6}
+              pathOptions={{
+                color: "#1d4ed8",
+                fillColor: selectedCity?.id === city.id ? "#1d4ed8" : "#93c5fd",
+                fillOpacity: 0.95,
+                weight: 2,
+              }}
+              eventHandlers={{ click: () => onSelectCity(city.id) }}
+            />
+          ))}
         </MapContainer>
 
-        {viewMode === "pollution-density" && (
-          <div className="pointer-events-none absolute bottom-3 left-3 z-[1000] border border-slate-300 bg-white/95 px-3 py-2 text-[11px] text-slate-700 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-200">
-            Pollution Density Scale: gridded grey shading, light = low pollution and dark = high pollution
-            <div className="mt-2 flex items-center gap-1">
-              {["#f5f5f5", "#e5e7eb", "#d1d5db", "#9ca3af", "#6b7280", "#4b5563", "#1f2937"].map((shade) => (
-                <span key={shade} className="inline-block h-3 w-5 border border-slate-400" style={{ backgroundColor: shade }} />
-              ))}
-            </div>
-          </div>
-        )}
+        <div className="absolute right-3 top-3 z-[1000] border border-slate-300 bg-white/95 px-2 py-1 text-[11px] font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-200">
+          Source: Department of Environmental Statistics, 2026. Updated: {lastUpdated}
+        </div>
       </div>
     </motion.section>
   );

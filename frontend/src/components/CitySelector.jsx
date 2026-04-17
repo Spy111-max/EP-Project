@@ -75,7 +75,7 @@ export default function CitySelector({ cities, selectedCityId, onSelectCity }) {
     <section className="border border-slate-300 bg-white p-3 shadow-sm transition-colors duration-300 dark:border-slate-700 dark:bg-slate-900">
       <div className="mb-2">
         <div className="mb-2 flex items-end justify-between gap-3">
-          <label className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Select City to Begin</label>
+          <label className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">City Search</label>
           <span className="text-[11px] text-slate-500 dark:text-slate-400">{cities.length} cities available</span>
         </div>
         <div className="relative">
@@ -91,8 +91,8 @@ export default function CitySelector({ cities, selectedCityId, onSelectCity }) {
               setQuery(event.target.value);
               setOpen(true);
             }}
-            placeholder={selectedCity ? `Selected: ${selectedCity.name}` : "Search Indian cities..."}
-            className="w-full border border-slate-300 bg-slate-50 px-10 py-2.5 pr-10 text-sm font-medium text-slate-700 outline-none transition duration-200 focus:border-brand-500 focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+            placeholder={selectedCity ? `Selected: ${selectedCity.name}` : "Type city name to open dropdown suggestions..."}
+            className="w-full border border-slate-300 bg-slate-50 px-10 py-2.5 pr-10 text-sm font-medium text-slate-700 outline-none transition duration-200 focus:border-brand-500 focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:bg-slate-900"
           />
           {query ? (
             <button
@@ -102,7 +102,7 @@ export default function CitySelector({ cities, selectedCityId, onSelectCity }) {
                 setQuery("");
                 setOpen(true);
               }}
-              className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-content-center border border-slate-300 bg-white text-slate-500 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-300"
+              className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-content-center border border-slate-300 bg-white text-slate-500 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
               aria-label="Clear search"
             >
               <X className="h-3.5 w-3.5" />
@@ -118,7 +118,7 @@ export default function CitySelector({ cities, selectedCityId, onSelectCity }) {
             >
               {query.trim() ? (
                 matches.length > 0 ? (
-                  matches.slice(0, 10).map((city) => (
+                  matches.slice(0, 12).map((city) => (
                     <li key={city.id}>
                       <button
                         type="button"

@@ -39,7 +39,7 @@ export default function Navbar({ darkMode, onToggleDarkMode, cityCount }) {
         <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3">
           <div className="flex items-center gap-2 font-semibold uppercase tracking-[0.16em] text-slate-100">
             <ShieldCheck className="h-3.5 w-3.5" />
-            National Forestry & Climate Department
+            Forestry & Climate Department
           </div>
           <div className="hidden items-center gap-2 text-slate-200 md:flex">
             <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-stable-600" />
@@ -67,8 +67,8 @@ export default function Navbar({ darkMode, onToggleDarkMode, cityCount }) {
             </motion.div>
           </motion.div>
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Command Center</p>
-            <h1 className="text-base font-bold text-white md:text-lg">National Environmental Monitoring Dashboard</h1>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Data Monitor</p>
+            <h1 className="text-base font-bold text-white md:text-lg">Environmental Monitoring Dashboard</h1>
             <p className="text-[11px] text-slate-300">Home &gt; Data &amp; Statistics &gt; Air Quality &amp; Reforestation</p>
           </div>
         </div>
@@ -76,18 +76,17 @@ export default function Navbar({ darkMode, onToggleDarkMode, cityCount }) {
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-2 border border-slate-700 bg-slate-900 px-3 py-2 text-xs text-slate-200 md:flex">
             <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-stable-600" />
-            Live Updated: {timestamp}
+            Last Updated: {timestamp}
           </div>
-
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+          <button
+            type="button"
             onClick={onToggleDarkMode}
-            className="border border-slate-700 bg-slate-900 p-2 text-slate-100 transition-all duration-300 hover:bg-slate-800"
-            title="Toggle dark mode"
+            className="border border-slate-700 bg-slate-900 p-2 text-slate-100 transition hover:bg-slate-800"
+            title="Toggle color mode"
+            aria-label="Toggle color mode"
           >
             {darkMode ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
-          </motion.button>
+          </button>
         </div>
       </div>
     </header>
