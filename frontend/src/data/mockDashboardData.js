@@ -32,6 +32,40 @@ const coreCityProfiles = [
   { id: "kanpur", name: "Kanpur", state: "Uttar Pradesh", position: [26.4499, 80.3319], summary: { pm25: 100, pm10: 152, aqi: 165 }, template: "industrial", hotspotLabel: "Kanpur Industrial Cluster" },
 ];
 
+const coreCityPm1ById = {
+  delhi: 46,
+  mumbai: 35,
+  bengaluru: 26,
+  kolkata: 39,
+  hyderabad: 32,
+  pune: 30,
+  ahmedabad: 42,
+  jaipur: 38,
+  lucknow: 44,
+  chandigarh: 28,
+  indore: 33,
+  vadodara: 31,
+  surat: 37,
+  visakhapatnam: 31,
+  coimbatore: 24,
+  chennai: 40,
+  kochi: 22,
+  thiruvananthapuram: 21,
+  madurai: 27,
+  tiruchirappalli: 25,
+  nagpur: 34,
+  bhopal: 29,
+  raipur: 33,
+  ranchi: 27,
+  bhubaneswar: 30,
+  patna: 43,
+  guwahati: 31,
+  shimla: 18,
+  srinagar: 19,
+  dehradun: 25,
+  kanpur: 45,
+};
+
 const extraCitySeeds = [
   { id: "amritsar", name: "Amritsar", state: "Punjab", position: [31.634, 74.8723] },
   { id: "ludhiana", name: "Ludhiana", state: "Punjab", position: [30.901, 75.8573] },
@@ -266,7 +300,13 @@ function buildSeedProfile(seed, index) {
   };
 }
 
-const cityProfiles = [...coreCityProfiles];
+const cityProfiles = coreCityProfiles.map((profile) => ({
+  ...profile,
+  summary: {
+    ...profile.summary,
+    pm1: coreCityPm1ById[profile.id] ?? Math.max(12, Math.round(profile.summary.pm25 * 0.45)),
+  },
+}));
 
 const recommendationTemplates = {
   industrial: [
@@ -305,11 +345,11 @@ const recommendationTemplates = {
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
-function summary(pm25, pm10, aqi) {
+function summary(pm25, pm10, pm1) {
   return [
     { id: "pm25", label: "PM2.5", value: pm25, unit: "ug/m3", hint: "Fine particles" },
     { id: "pm10", label: "PM10", value: pm10, unit: "ug/m3", hint: "Coarse particles" },
-    { id: "aqi", label: "AQI Index", value: aqi, unit: "index", hint: "Overall air quality" },
+    { id: "pm1", label: "PM1", value: pm1, unit: "ug/m3", hint: "Ultrafine particle concentration" },
   ];
 }
 
@@ -351,17 +391,34 @@ function buildRecommendations(profile) {
   }));
 }
 
+function buildActionPlan(profile, recommendations) {
+  const topSpecies = recommendations.slice(0, 2).map((item) => item.commonName).join(" and ");
+
+  const steps = [
+    `Prioritize ${topSpecies} along the highest traffic corridors and source hotspots in ${profile.name} to create fast particulate interception layers.`,
+    `Use a monsoon-window planting schedule and deep mulch ring around new saplings so survival rates stay high during the first year.`,
+    `Pair tree planting with dust-source control: wet sweeping, curbside cleaning, and idling reduction around junctions and industrial stretches.`,
+    `Recheck PM2.5, PM10, and PM1 after each planting cycle and refill gaps with replacement saplings in failed pockets within the next season.`,
+  ];
+
+  return {
+    summary: `The next action phase for ${profile.name} should focus on fast-canopy establishment, source-side suppression, and survival-focused maintenance so the pollution load begins to drop in the shortest practical window.`,
+    steps,
+  };
+}
+
 export const cityCatalog = cityProfiles.map(({ id, name, state, position }) => ({ id, name, state, position }));
 
 export const cityInsights = Object.fromEntries(
   cityProfiles.map((profile) => {
     const hotspotAqi = Math.min(210, profile.summary.aqi + 10);
     const hotspotPm25 = Math.min(190, profile.summary.pm25 + 8);
+    const recommendations = buildRecommendations(profile);
 
     return [
       profile.id,
       {
-        summaryCards: summary(profile.summary.pm25, profile.summary.pm10, profile.summary.aqi),
+        summaryCards: summary(profile.summary.pm25, profile.summary.pm10, profile.summary.pm1),
         trendData: makeTrend(profile.summary),
         hotspots: [
           {
@@ -374,7 +431,8 @@ export const cityInsights = Object.fromEntries(
             color: getHotspotColor(hotspotAqi),
           },
         ],
-        recommendations: buildRecommendations(profile),
+        recommendations,
+        actionPlan: buildActionPlan(profile, recommendations),
       },
     ];
   }),

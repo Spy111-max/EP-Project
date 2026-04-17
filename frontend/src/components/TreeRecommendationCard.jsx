@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { cardHover } from "../animations/variants";
 
-export default function TreeRecommendationCard({ item, index }) {
+export default function TreeRecommendationCard({ item, index, onOpenDetails }) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 10 }}
@@ -13,7 +13,13 @@ export default function TreeRecommendationCard({ item, index }) {
       title={item.reason}
     >
       <div className="mb-1 flex items-center justify-between gap-2">
-        <h4 className="text-sm font-bold text-slate-900 dark:text-white">{item.commonName}</h4>
+        <button
+          type="button"
+          onClick={() => onOpenDetails?.(item)}
+          className="text-left text-sm font-bold text-slate-900 underline-offset-2 transition hover:underline dark:text-white"
+        >
+          {item.commonName}
+        </button>
         <span className="border border-brand-200 bg-brand-50 px-2 py-1 text-[10px] font-semibold text-brand-700 dark:border-brand-700 dark:bg-brand-900/30 dark:text-brand-200">
           Match {item.match}%
         </span>

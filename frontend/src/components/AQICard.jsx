@@ -15,7 +15,7 @@ export default function AQICard({ label, value, unit, hint }) {
     >
       <div className="mb-3 flex items-center justify-between">
         <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">{label}</p>
-        <span className={`h-2.5 w-2.5 rounded-full ${band.color}`} title={`AQI band: ${band.label}`} />
+        <span className={`h-2.5 w-2.5 rounded-full ${band.color}`} title={`Status band: ${band.label}`} />
       </div>
       <p className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
         <CountUpValue value={value} decimals={decimals} />

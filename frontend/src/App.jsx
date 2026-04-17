@@ -1,35 +1,22 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import AQISummaryGrid from "./components/AQISummaryGrid";
 import ChartSection from "./components/ChartSection";
+import AreaOverviewReport from "./components/AreaOverviewReport";
 import MapPreview from "./components/MapPreview";
 import TreeRecommendationsPanel from "./components/TreeRecommendationsPanel";
 import LoadingSkeleton from "./components/LoadingSkeleton";
 import CitySelector from "./components/CitySelector";
 import { cityCatalog, cityInsights } from "./data/mockDashboardData";
+import { getTreeSlugFromName } from "./data/environment/treeDetailsData";
 import { pageVariants, sectionStaggerVariants, sectionVariants } from "./animations/variants";
 
-export default function App() {
-  const [darkMode, setDarkMode] = useState(false);
+export default function App({ darkMode, onToggleDarkMode }) {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [selectedCityId, setSelectedCityId] = useState("");
-
-  useEffect(() => {
-    const stored = localStorage.getItem("psas-dark-mode");
-    const shouldEnable = stored === "true";
-    setDarkMode(shouldEnable);
-    document.documentElement.classList.toggle("dark", shouldEnable);
-  }, []);
-
-  function toggleDarkMode() {
-    setDarkMode((prev) => {
-      const next = !prev;
-      localStorage.setItem("psas-dark-mode", String(next));
-      document.documentElement.classList.toggle("dark", next);
-      return next;
-    });
-  }
 
   const selectedCity = cityCatalog.find((city) => city.id === selectedCityId) || null;
   const selectedInsight = selectedCityId ? cityInsights[selectedCityId] : null;
@@ -62,10 +49,27 @@ export default function App() {
   const visibleRecommendations =
     selectedInsight?.recommendations?.length ? selectedInsight.recommendations : baselineRecommendations;
 
+  function openTreeDetails(item) {
+    const treeSlug = getTreeSlugFromName(item?.commonName);
+    navigate(`/trees/${treeSlug}`, {
+      state: {
+        recommendation: item,
+        cityName: selectedCity?.name || null,
+      },
+    });
+  }
+
+  function openAqiDetails() {
+    navigate("/aqi");
+  }
+
   const executiveSummary = useMemo(() => {
     const insights = Object.values(cityInsights);
     const aqiValues = insights
-      .map((item) => item.summaryCards.find((card) => card.id === "aqi")?.value)
+      .map((item) => {
+        const latestPoint = item.trendData?.[item.trendData.length - 1];
+        return latestPoint?.aqi;
+      })
       .filter((value) => typeof value === "number");
     const nationalAqi = aqiValues.length ? Math.round(aqiValues.reduce((sum, value) => sum + value, 0) / aqiValues.length) : 0;
 
@@ -121,21 +125,29 @@ export default function App() {
       animate="visible"
       className="min-h-screen bg-slate-100 pb-6 dark:bg-slate-950"
     >
-      <Navbar darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />
+      <Navbar darkMode={darkMode} onToggleDarkMode={onToggleDarkMode} cityCount={cityCatalog.length} />
 
       <div className="mx-auto mt-3 grid max-w-[1440px] gap-3 px-4 md:px-6">
         <motion.main variants={sectionStaggerVariants} initial="hidden" animate="visible" className="space-y-4">
           <motion.section variants={sectionVariants} className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-            {executiveSummary.map((card) => (
-              <article
+            {executiveSummary.map((card) => {
+              const CardTag = card.id === "national-aqi" ? motion.button : motion.article;
+
+              return (
+              <CardTag
                 key={card.id}
-                className="border border-slate-300 bg-white px-4 py-3 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                type={card.id === "national-aqi" ? "button" : undefined}
+                onClick={card.id === "national-aqi" ? openAqiDetails : undefined}
+                whileHover={card.id === "national-aqi" ? { y: -2 } : undefined}
+                whileTap={card.id === "national-aqi" ? { scale: 0.995 } : undefined}
+                className="border border-slate-300 bg-white px-4 py-3 text-left shadow-sm transition dark:border-slate-700 dark:bg-slate-900"
               >
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">{card.label}</p>
                 <p className={`mt-2 text-2xl font-extrabold tracking-tight ${card.id === "plantations" ? "font-mono" : ""} ${card.tone}`}>{card.value}</p>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{card.suffix}</p>
-              </article>
-            ))}
+              </CardTag>
+              );
+            })}
           </motion.section>
 
           <motion.section variants={sectionVariants} className="space-y-4">
@@ -189,10 +201,17 @@ export default function App() {
                   recommendations={visibleRecommendations}
                   isPersonalized={Boolean(selectedCityId)}
                   selectedCityName={selectedCity?.name}
+                  onOpenTreeDetails={openTreeDetails}
                 />
               </motion.div>
             )}
           </AnimatePresence>
+
+          {selectedCity && selectedInsight && (
+            <motion.section variants={sectionVariants} className="space-y-4">
+              <AreaOverviewReport city={selectedCity} insight={selectedInsight} recommendations={visibleRecommendations} />
+            </motion.section>
+          )}
         </motion.main>
       </div>
     </motion.div>

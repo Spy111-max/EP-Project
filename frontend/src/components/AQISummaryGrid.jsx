@@ -7,8 +7,8 @@ export default function AQISummaryGrid({ cards, loading }) {
   if (!loading && (!cards || cards.length === 0)) {
     return (
       <section className="border border-slate-300 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <h3 className="text-sm font-bold text-slate-900 dark:text-white md:text-base">AQI Summary</h3>
-        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Select a city to view PM2.5, PM10, and AQI summary cards.</p>
+        <h3 className="text-sm font-bold text-slate-900 dark:text-white md:text-base">Pollutant Summary</h3>
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Select a city to view PM2.5, PM10, and PM1 summary cards.</p>
       </section>
     );
   }

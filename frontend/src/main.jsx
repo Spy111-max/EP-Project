@@ -1,8 +1,46 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
 import App from "./App";
 import AppErrorBoundary from "./components/AppErrorBoundary";
+import AQIDetailPage from "./components/AQIDetailPage";
+import TreeDetailPage from "./components/TreeDetailPage";
+import { cityCatalog } from "./data/mockDashboardData";
 import "./index.css";
+
+function RoutedApp() {
+	const [darkMode, setDarkMode] = useState(false);
+
+	useEffect(() => {
+		const stored = localStorage.getItem("psas-dark-mode");
+		const shouldEnable = stored === "true";
+		setDarkMode(shouldEnable);
+		document.documentElement.classList.toggle("dark", shouldEnable);
+	}, []);
+
+	function toggleDarkMode() {
+		setDarkMode((prev) => {
+			const next = !prev;
+			localStorage.setItem("psas-dark-mode", String(next));
+			document.documentElement.classList.toggle("dark", next);
+			return next;
+		});
+	}
+
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<App darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />} />
+				<Route path="/aqi" element={<AQIDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />} />
+				<Route
+					path="/trees/:treeSlug"
+					element={<TreeDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />}
+				/>
+			</Routes>
+		</BrowserRouter>
+	);
+}
 
 function mountGlobalErrorView(message) {
 	const root = document.getElementById("root");
@@ -27,7 +65,7 @@ window.addEventListener("unhandledrejection", (event) => {
 try {
 	ReactDOM.createRoot(document.getElementById("root")).render(
 		<AppErrorBoundary>
-			<App />
+			<RoutedApp />
 		</AppErrorBoundary>,
 	);
 } catch (error) {

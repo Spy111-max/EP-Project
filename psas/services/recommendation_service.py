@@ -212,6 +212,20 @@ def build_recommendations(zone: dict[str, Any]) -> dict[str, Any]:
     fast, fast_fallback_used = top_by_growth(filtered_species, "fast", 4)
     long_term, long_fallback_used = top_by_growth(filtered_species, "long_term", 4)
 
+    top_species = [item["common_name"] for item in (fast[:2] or long_term[:2])]
+    action_plan = {
+        "summary": (
+            f"The next action phase for {zone.get('name', 'the selected area')} should prioritize fast canopy establishment, "
+            "source-side suppression, and maintenance scheduling to lower pollution as quickly as possible."
+        ),
+        "steps": [
+            f"Prioritize {' and '.join(top_species) if top_species else 'the highest-fit species'} along traffic corridors and hotspot edges.",
+            "Plant during the monsoon window and apply mulch rings to improve early survival.",
+            "Pair greening with dust-source control, including curb cleaning and reduced idling near congestion points.",
+            "Track PM2.5, PM10, and PM1 after each planting phase and replant failed pockets in the next season.",
+        ],
+    }
+
     return {
         "zone": zone,
         "land_structure": land_structure,
@@ -224,6 +238,7 @@ def build_recommendations(zone: dict[str, Any]) -> dict[str, Any]:
         },
         "fast_growing": fast,
         "long_term": long_term,
+        "action_plan": action_plan,
     }
 
 

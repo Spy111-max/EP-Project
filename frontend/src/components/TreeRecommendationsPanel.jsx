@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import TreeRecommendationCard from "./TreeRecommendationCard";
 import { cardHover } from "../animations/variants";
 
-export default function TreeRecommendationsPanel({ recommendations }) {
+export default function TreeRecommendationsPanel({ recommendations, onOpenTreeDetails }) {
   if (!recommendations || recommendations.length === 0) {
     return (
       <motion.section
@@ -39,7 +39,12 @@ export default function TreeRecommendationsPanel({ recommendations }) {
 
       <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-1">
         {recommendations.map((item, index) => (
-          <TreeRecommendationCard key={item.id} item={item} index={index} />
+          <TreeRecommendationCard
+            key={item.id}
+            item={item}
+            index={index}
+            onOpenDetails={onOpenTreeDetails}
+          />
         ))}
       </div>
     </motion.section>
