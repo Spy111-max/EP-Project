@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import App from "./App";
 import AppErrorBoundary from "./components/AppErrorBoundary";
 import AQIDetailPage from "./components/AQIDetailPage";
+import ForestCoverageDetailPage from "./components/ForestCoverageDetailPage";
+import PolicyStatusDetailPage from "./components/PolicyStatusDetailPage";
+import PollutantDetailPage from "./components/PollutantDetailPage";
 import TreeDetailPage from "./components/TreeDetailPage";
+import TreePlantationsDetailPage from "./components/TreePlantationsDetailPage";
 import { cityCatalog } from "./data/mockDashboardData";
 import "./index.css";
 
@@ -33,6 +37,22 @@ function RoutedApp() {
 			<Routes>
 				<Route path="/" element={<App darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />} />
 				<Route path="/aqi" element={<AQIDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />} />
+				<Route
+					path="/forest-coverage"
+					element={<ForestCoverageDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />}
+				/>
+				<Route
+					path="/tree-plantations"
+					element={<TreePlantationsDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />}
+				/>
+				<Route
+					path="/policy-status"
+					element={<PolicyStatusDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />}
+				/>
+				<Route
+					path="/pollutants/:pollutantKey"
+					element={<PollutantDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />}
+				/>
 				<Route
 					path="/trees/:treeSlug"
 					element={<TreeDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />}

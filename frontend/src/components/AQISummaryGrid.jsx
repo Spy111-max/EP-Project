@@ -3,7 +3,7 @@ import AQICard from "./AQICard";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { sectionStaggerVariants, sectionVariants } from "../animations/variants";
 
-export default function AQISummaryGrid({ cards, loading }) {
+export default function AQISummaryGrid({ cards, loading, onCardClick }) {
   if (!loading && (!cards || cards.length === 0)) {
     return (
       <section className="border border-slate-300 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
@@ -24,7 +24,7 @@ export default function AQISummaryGrid({ cards, loading }) {
             ))
           : cards.map((card) => (
               <motion.div key={card.id} variants={sectionVariants}>
-                <AQICard {...card} />
+                <AQICard {...card} onClick={onCardClick ? () => onCardClick(card.id) : undefined} />
               </motion.div>
             ))}
       </AnimatePresence>

@@ -3,15 +3,18 @@ import { getAQIBand } from "../utils/aqi";
 import CountUpValue from "./CountUpValue";
 import { cardHover } from "../animations/variants";
 
-export default function AQICard({ label, value, unit, hint }) {
+export default function AQICard({ label, value, unit, hint, onClick }) {
   const band = getAQIBand(value);
   const decimals = Number.isInteger(value) ? 0 : 1;
+  const CardTag = onClick ? motion.button : motion.article;
 
   return (
-    <motion.article
+    <CardTag
+      type={onClick ? "button" : undefined}
+      onClick={onClick}
       whileHover={cardHover}
       whileTap={{ scale: 0.995 }}
-      className={`border border-slate-300 bg-gradient-to-br ${band.tone} p-3 shadow-sm dark:border-slate-700 dark:from-slate-900 dark:via-slate-800 dark:to-slate-800`}
+      className={`block h-full w-full border border-slate-300 bg-gradient-to-br ${band.tone} p-3 text-left shadow-sm dark:border-slate-700 dark:from-slate-900 dark:via-slate-800 dark:to-slate-800`}
     >
       <div className="mb-3 flex items-center justify-between">
         <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">{label}</p>
@@ -34,6 +37,6 @@ export default function AQICard({ label, value, unit, hint }) {
           </motion.p>
         </div>
       </div>
-    </motion.article>
+    </CardTag>
   );
 }

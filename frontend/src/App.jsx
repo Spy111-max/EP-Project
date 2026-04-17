@@ -59,8 +59,19 @@ export default function App({ darkMode, onToggleDarkMode }) {
     });
   }
 
-  function openAqiDetails() {
-    navigate("/aqi");
+  function openExecutiveDetails(cardId) {
+    const routeByCard = {
+      "national-aqi": "/aqi",
+      "forest-coverage": "/forest-coverage",
+      plantations: "/tree-plantations",
+      "policy-status": "/policy-status",
+      pm25: "/pollutants/pm25",
+      pm10: "/pollutants/pm10",
+      pm1: "/pollutants/pm1",
+    };
+
+    const route = routeByCard[cardId];
+    if (route) navigate(route);
   }
 
   const executiveSummary = useMemo(() => {
@@ -131,15 +142,15 @@ export default function App({ darkMode, onToggleDarkMode }) {
         <motion.main variants={sectionStaggerVariants} initial="hidden" animate="visible" className="space-y-4">
           <motion.section variants={sectionVariants} className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
             {executiveSummary.map((card) => {
-              const CardTag = card.id === "national-aqi" ? motion.button : motion.article;
+              const CardTag = motion.button;
 
               return (
               <CardTag
                 key={card.id}
-                type={card.id === "national-aqi" ? "button" : undefined}
-                onClick={card.id === "national-aqi" ? openAqiDetails : undefined}
-                whileHover={card.id === "national-aqi" ? { y: -2 } : undefined}
-                whileTap={card.id === "national-aqi" ? { scale: 0.995 } : undefined}
+                type="button"
+                onClick={() => openExecutiveDetails(card.id)}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.995 }}
                 className="border border-slate-300 bg-white px-4 py-3 text-left shadow-sm transition dark:border-slate-700 dark:bg-slate-900"
               >
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">{card.label}</p>
@@ -187,7 +198,11 @@ export default function App({ darkMode, onToggleDarkMode }) {
           </motion.section>
 
           <motion.section variants={sectionVariants} className="space-y-4">
-            <AQISummaryGrid cards={selectedInsight?.summaryCards || []} loading={loading && !!selectedCityId} />
+            <AQISummaryGrid
+              cards={selectedInsight?.summaryCards || []}
+              loading={loading && !!selectedCityId}
+              onCardClick={openExecutiveDetails}
+            />
           </motion.section>
 
           <AnimatePresence mode="wait">
