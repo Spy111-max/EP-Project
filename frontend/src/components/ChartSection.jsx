@@ -26,7 +26,7 @@ function ChartCard({ title, subtitle, lastUpdated, children }) {
       animate={{ opacity: 1, y: 0 }}
       whileHover={cardHover}
       transition={{ duration: 0.28 }}
-      className="border border-slate-300 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+      className="border border-slate-300 bg-white p-3 shadow-[0_16px_26px_-24px_rgba(27,54,93,0.82)] dark:border-slate-700 dark:bg-slate-900"
     >
       <div className="mb-3 flex items-start justify-between gap-3">
         <div>
@@ -96,7 +96,7 @@ export default function ChartSection({ trendData, selectedCity }) {
 
   return (
     <div className="space-y-3">
-      <section className="border border-slate-300 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-800">
+      <section className="border border-slate-300 bg-slate-100 p-2 dark:border-slate-700 dark:bg-slate-800">
         <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">Time Series</p>
         <div className="flex flex-wrap gap-1.5">
           {Object.keys(RANGE_WINDOWS).map((value) => (

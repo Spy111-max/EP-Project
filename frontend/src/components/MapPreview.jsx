@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker } from "react-leaflet";
 import { cardHover } from "../animations/variants";
 import { Layers3 } from "lucide-react";
 
@@ -52,7 +52,6 @@ export default function MapPreview({ cities, selectedCity, hotspots, selectedHot
       ...spot,
       safePosition: [Number(spot.position[0]), Number(spot.position[1])],
       safeAqi: Number.isFinite(spot.aqi) ? spot.aqi : 100,
-      safeColor: typeof spot.color === "string" ? spot.color : null,
     }));
 
   const safeSelectedHotspots = (selectedHotspots || [])
@@ -61,17 +60,9 @@ export default function MapPreview({ cities, selectedCity, hotspots, selectedHot
       ...spot,
       safePosition: [Number(spot.position[0]), Number(spot.position[1])],
       safeAqi: Number.isFinite(spot.aqi) ? spot.aqi : 100,
-      safeColor: typeof spot.color === "string" ? spot.color : null,
     }));
 
-  function getGrayDensityColor(aqi) {
-    if (aqi >= 170) return "#1f1f1f";
-    if (aqi >= 140) return "#404040";
-    if (aqi >= 110) return "#737373";
-    return "#d4d4d4";
-  }
-
-  function getGrayDensityColor(aqi) {
+  function getDensityColor(aqi) {
     if (aqi >= 170) return "#1f1f1f";
     if (aqi >= 140) return "#404040";
     if (aqi >= 110) return "#737373";
@@ -82,7 +73,7 @@ export default function MapPreview({ cities, selectedCity, hotspots, selectedHot
 
   function buildDensityCircle(spot, index, selectedMode) {
     const aqi = Number.isFinite(spot.safeAqi) ? spot.safeAqi : 100;
-    const color = getGrayDensityColor(aqi);
+    const color = getDensityColor(aqi);
     const opacity = selectedMode
       ? aqi >= 170
         ? 0.3
@@ -118,21 +109,17 @@ export default function MapPreview({ cities, selectedCity, hotspots, selectedHot
     const cityDotRadius = 6;
 
     return safeHotspots.length > 0
-      ? safeHotspots.map((spot, index) => {
-          return {
-            ...buildDensityCircle(spot, index, false),
-            radius: cityDotRadius * 5,
-          };
-        })
-      : safeCities.map((city, index) => {
-          return {
-            id: `${city.id}-neutral-density`,
-            center: city.safePosition,
-            radius: cityDotRadius * 5,
-            color: ["#e5e7eb", "#d1d5db", "#cbd5e1", "#9ca3af"][index % 4],
-            fillOpacity: [0.12, 0.15, 0.18, 0.2][index % 4],
-          };
-        });
+      ? safeHotspots.map((spot, index) => ({
+          ...buildDensityCircle(spot, index, false),
+          radius: cityDotRadius * 5,
+        }))
+      : safeCities.map((city, index) => ({
+          id: `${city.id}-neutral-density`,
+          center: city.safePosition,
+          radius: cityDotRadius * 5,
+          color: ["#e5e7eb", "#d1d5db", "#cbd5e1", "#9ca3af"][index % 4],
+          fillOpacity: [0.12, 0.15, 0.18, 0.2][index % 4],
+        }));
   }, [safeCities, safeHotspots]);
 
   const getTileLayer = () => {
@@ -160,11 +147,11 @@ export default function MapPreview({ cities, selectedCity, hotspots, selectedHot
       transition={{ duration: 0.25, delay: 0.05 }}
       className="border border-slate-300 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900"
     >
-      <div className="mb-3 border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-800">
+      <div className="mb-3 border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-950/40">
         <div className="mb-2 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
-          <Layers3 className="h-3.5 w-3.5" />
-          Map Controls
+            <Layers3 className="h-3.5 w-3.5" />
+            Map Controls
           </div>
           <span className="text-[11px] text-slate-500 dark:text-slate-400">Zoom limited to {minZoom}x - {maxZoom}x</span>
         </div>
@@ -262,8 +249,15 @@ export default function MapPreview({ cities, selectedCity, hotspots, selectedHot
           ))}
         </MapContainer>
 
-        <div className="absolute right-3 top-3 z-[1000] border border-slate-300 bg-white/95 px-2 py-1 text-[11px] font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-200">
-          Source: Department of Environmental Statistics, 2026. Updated: {lastUpdated}
+        <div className="absolute left-3 top-3 z-[1000] border border-slate-300 bg-white/95 px-3 py-2 text-[11px] font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-200">
+          <p className="font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Operational Map</p>
+          <p className="mt-0.5">Source: Department of Environmental Statistics, 2026</p>
+        </div>
+        <div className="absolute right-3 top-3 z-[1000] border border-slate-300 bg-white/95 px-3 py-2 text-[11px] font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-200">
+          Updated: {lastUpdated}
+        </div>
+        <div className="absolute bottom-3 left-3 z-[1000] border border-slate-300 bg-white/95 px-3 py-2 text-[11px] font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-200">
+          {selectedCity ? `${selectedCity.name} selected` : "Awaiting city selection"}
         </div>
       </div>
     </motion.section>

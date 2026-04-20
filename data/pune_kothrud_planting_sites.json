@@ -1,0 +1,72 @@
+[
+  {
+    "site_id": "kothrud-01",
+    "zone_id": "zone-pune-kothrud-01",
+    "name": "Paud Road median strip (Karve Statue stretch)",
+    "locality": "Kothrud",
+    "city": "Pune",
+    "coordinates": [18.5079, 73.8073],
+    "surface_type": "open-soil-median",
+    "plantable_area_m2": 68,
+    "recommended_tree_count": 12,
+    "max_canopy_tier": "compact",
+    "notes": "Use root barriers near storm drains; avoid carriageway concrete slabs.",
+    "planting_allowed": true
+  },
+  {
+    "site_id": "kothrud-02",
+    "zone_id": "zone-pune-kothrud-01",
+    "name": "DP Road edge setback near Ideal Colony",
+    "locality": "Kothrud",
+    "city": "Pune",
+    "coordinates": [18.5098, 73.8186],
+    "surface_type": "soil-setback",
+    "plantable_area_m2": 124,
+    "recommended_tree_count": 18,
+    "max_canopy_tier": "medium",
+    "notes": "Keep 1.8m clearance from utility junction boxes.",
+    "planting_allowed": true
+  },
+  {
+    "site_id": "kothrud-03",
+    "zone_id": "zone-pune-kothrud-01",
+    "name": "Mhatre Bridge approach embankment pocket",
+    "locality": "Kothrud",
+    "city": "Pune",
+    "coordinates": [18.5141, 73.8274],
+    "surface_type": "embankment-soil",
+    "plantable_area_m2": 92,
+    "recommended_tree_count": 14,
+    "max_canopy_tier": "medium",
+    "notes": "Select soil-binding species; avoid retaining wall footing zone.",
+    "planting_allowed": true
+  },
+  {
+    "site_id": "kothrud-04",
+    "zone_id": "zone-pune-kothrud-01",
+    "name": "PMT depot rear green buffer strip",
+    "locality": "Kothrud",
+    "city": "Pune",
+    "coordinates": [18.5009, 73.8125],
+    "surface_type": "open-buffer-soil",
+    "plantable_area_m2": 156,
+    "recommended_tree_count": 24,
+    "max_canopy_tier": "medium",
+    "notes": "Avoid paved bus maneuvering apron and fuel service slab.",
+    "planting_allowed": true
+  },
+  {
+    "site_id": "kothrud-05",
+    "zone_id": "zone-pune-kothrud-01",
+    "name": "Building frontage (concrete forecourt sample)",
+    "locality": "Kothrud",
+    "city": "Pune",
+    "coordinates": [18.5116, 73.8131],
+    "surface_type": "concrete-forecourt",
+    "plantable_area_m2": 0,
+    "recommended_tree_count": 0,
+    "max_canopy_tier": "none",
+    "notes": "Excluded: full concrete surface and active building access.",
+    "planting_allowed": false
+  }
+]

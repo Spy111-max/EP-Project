@@ -26,8 +26,29 @@ def _normalize(value: float, min_value: float, max_value: float) -> float:
     return (value - min_value) / (max_value - min_value)
 
 
+def _zone_site_constraints(zone: dict[str, Any]) -> dict[str, float]:
+    constraints = zone.get("site_constraints") or {}
+
+    zone_type = zone.get("zone_type")
+    default_by_zone_type = {
+        "industrial": {"plantable_ratio": 0.22, "impervious_ratio": 0.62, "building_footprint_ratio": 0.3, "utility_clearance_score": 0.58},
+        "traffic": {"plantable_ratio": 0.28, "impervious_ratio": 0.58, "building_footprint_ratio": 0.22, "utility_clearance_score": 0.62},
+        "residential": {"plantable_ratio": 0.34, "impervious_ratio": 0.52, "building_footprint_ratio": 0.18, "utility_clearance_score": 0.68},
+        "peri_urban": {"plantable_ratio": 0.48, "impervious_ratio": 0.36, "building_footprint_ratio": 0.08, "utility_clearance_score": 0.76},
+    }
+    defaults = default_by_zone_type.get(zone_type, default_by_zone_type["residential"])
+
+    return {
+        "plantable_ratio": float(constraints.get("plantable_ratio", defaults["plantable_ratio"])),
+        "impervious_ratio": float(constraints.get("impervious_ratio", defaults["impervious_ratio"])),
+        "building_footprint_ratio": float(constraints.get("building_footprint_ratio", defaults["building_footprint_ratio"])),
+        "utility_clearance_score": float(constraints.get("utility_clearance_score", defaults["utility_clearance_score"])),
+    }
+
+
 def _feature_vector(zone: dict[str, Any], species: dict[str, Any]) -> list[float]:
     climate_window = species["climate_window"]
+    site_constraints = _zone_site_constraints(zone)
 
     vector = [
         zone["pollution"]["pm25"],
@@ -48,6 +69,10 @@ def _feature_vector(zone: dict[str, Any], species: dict[str, Any]) -> list[float
         climate_window["temperature_c"]["tolerance"],
         climate_window["rainfall_mm"]["ideal"],
         climate_window["rainfall_mm"]["tolerance"],
+        site_constraints["plantable_ratio"],
+        site_constraints["impervious_ratio"],
+        site_constraints["building_footprint_ratio"],
+        site_constraints["utility_clearance_score"],
         1.0 if zone["environment"]["soil"] in species["soil_types"] else 0.0,
         1.0 if species["growth_category"] == "fast" else 0.0,
         1.0 if species["growth_category"] == "long_term" else 0.0,
@@ -63,6 +88,7 @@ def _feature_vector(zone: dict[str, Any], species: dict[str, Any]) -> list[float
 
 def _heuristic_target(zone: dict[str, Any], species: dict[str, Any]) -> float:
     weights = get_pollution_factor_weights()
+    site_constraints = _zone_site_constraints(zone)
 
     pollution_fit = (
         weights["pm25"] * _normalize(species["absorption"]["pm25"], 0, 10)
@@ -83,8 +109,15 @@ def _heuristic_target(zone: dict[str, Any], species: dict[str, Any]) -> float:
 
     growth_bonus = 1.08 if species["growth_category"] == "fast" and zone["zone_type"] in {"traffic", "industrial"} else 1.0
     carbon_bonus = _normalize(species["carbon_sequestration_kg_year"], 12, 42) * 0.1
+    siting_feasibility = (
+        0.52 * site_constraints["plantable_ratio"]
+        + 0.28 * site_constraints["utility_clearance_score"]
+        + 0.2 * max(0.0, 1 - site_constraints["impervious_ratio"])
+    )
+    footprint_penalty = max(0.0, 1 - 0.45 * site_constraints["building_footprint_ratio"])
+    feasibility_multiplier = max(0.55, min(1.18, 0.72 + siting_feasibility * 0.62)) * footprint_penalty
 
-    return round((0.58 * pollution_fit + 0.42 * survival) * growth_bonus + carbon_bonus, 5)
+    return round(((0.58 * pollution_fit + 0.42 * survival) * growth_bonus + carbon_bonus) * feasibility_multiplier, 5)
 
 
 def _build_training_data(
@@ -149,6 +182,9 @@ def train_recommender_model(
             "pollution PM2.5/PM10/NOx/SOx/CO2",
             "soil compatibility",
             "rainfall and temperature match",
+            "plantable area vs impervious area",
+            "building-footprint exclusion pressure",
+            "utility-clearance feasibility",
             "species growth category",
             "carbon sequestration potential",
             "zone type weighting",

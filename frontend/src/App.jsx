@@ -17,37 +17,15 @@ export default function App({ darkMode, onToggleDarkMode }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [selectedCityId, setSelectedCityId] = useState("");
+  const dashboardCities = useMemo(() => cityCatalog.slice(0, 31), []);
 
-  const selectedCity = cityCatalog.find((city) => city.id === selectedCityId) || null;
+  const selectedCity = dashboardCities.find((city) => city.id === selectedCityId) || null;
   const selectedInsight = selectedCityId ? cityInsights[selectedCityId] : null;
   const allHotspots = useMemo(
     () => Object.values(cityInsights).flatMap((insight) => insight.hotspots || []),
     [],
   );
-  const baselineRecommendations = useMemo(() => {
-    const bestByName = new Map();
-
-    Object.values(cityInsights).forEach((insight) => {
-      (insight.recommendations || []).forEach((item) => {
-        const key = item.commonName || item.id;
-        const current = bestByName.get(key);
-        if (!current || item.match > current.match) {
-          bestByName.set(key, item);
-        }
-      });
-    });
-
-    return Array.from(bestByName.values())
-      .sort((left, right) => right.match - left.match)
-      .slice(0, 4)
-      .map((item, index) => ({
-        ...item,
-        id: `baseline-${item.id || index}`,
-      }));
-  }, []);
-
-  const visibleRecommendations =
-    selectedInsight?.recommendations?.length ? selectedInsight.recommendations : baselineRecommendations;
+  const visibleRecommendations = selectedInsight?.recommendations || [];
 
   function openTreeDetails(item) {
     const treeSlug = getTreeSlugFromName(item?.commonName);
@@ -61,7 +39,7 @@ export default function App({ darkMode, onToggleDarkMode }) {
 
   function openExecutiveDetails(cardId) {
     const routeByCard = {
-      "national-aqi": "/aqi",
+      "aqi-index": "/aqi",
       "forest-coverage": "/forest-coverage",
       plantations: "/tree-plantations",
       "policy-status": "/policy-status",
@@ -82,15 +60,15 @@ export default function App({ darkMode, onToggleDarkMode }) {
         return latestPoint?.aqi;
       })
       .filter((value) => typeof value === "number");
-    const nationalAqi = aqiValues.length ? Math.round(aqiValues.reduce((sum, value) => sum + value, 0) / aqiValues.length) : 0;
+    const averageAqi = aqiValues.length ? Math.round(aqiValues.reduce((sum, value) => sum + value, 0) / aqiValues.length) : 0;
 
     const totalPlantationCandidates = insights.reduce((sum, item) => sum + item.recommendations.length, 0);
 
     return [
       {
-        id: "national-aqi",
+        id: "aqi-index",
         label: "AQI Index",
-        value: nationalAqi,
+        value: averageAqi,
         suffix: "Average",
         tone: "text-danger-700",
       },
@@ -136,9 +114,9 @@ export default function App({ darkMode, onToggleDarkMode }) {
       animate="visible"
       className="min-h-screen bg-slate-100 pb-6 dark:bg-slate-950"
     >
-      <Navbar darkMode={darkMode} onToggleDarkMode={onToggleDarkMode} cityCount={cityCatalog.length} />
+      <Navbar darkMode={darkMode} onToggleDarkMode={onToggleDarkMode} cityCount={dashboardCities.length} />
 
-      <div className="mx-auto mt-3 grid max-w-[1440px] gap-3 px-4 md:px-6">
+      <div className="mx-auto mt-3 grid max-w-[1500px] gap-3 px-4 md:px-6">
         <motion.main variants={sectionStaggerVariants} initial="hidden" animate="visible" className="space-y-4">
           <motion.section variants={sectionVariants} className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
             {executiveSummary.map((card) => {
@@ -151,9 +129,9 @@ export default function App({ darkMode, onToggleDarkMode }) {
                 onClick={() => openExecutiveDetails(card.id)}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.995 }}
-                className="border border-slate-300 bg-white px-4 py-3 text-left shadow-sm transition dark:border-slate-700 dark:bg-slate-900"
+                className="border border-slate-300 bg-white px-4 py-3 text-left shadow-[0_18px_28px_-26px_rgba(27,54,93,0.9)] transition dark:border-slate-700 dark:bg-slate-900"
               >
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">{card.label}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">{card.label}</p>
                 <p className={`mt-2 text-2xl font-extrabold tracking-tight ${card.id === "plantations" ? "font-mono" : ""} ${card.tone}`}>{card.value}</p>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{card.suffix}</p>
               </CardTag>
@@ -161,21 +139,27 @@ export default function App({ darkMode, onToggleDarkMode }) {
             })}
           </motion.section>
 
-          <motion.section variants={sectionVariants} className="space-y-4">
-            <CitySelector cities={cityCatalog} selectedCityId={selectedCityId} onSelectCity={setSelectedCityId} />
+          <motion.section variants={sectionVariants}>
+            <div>
+              <CitySelector
+                cities={dashboardCities}
+                selectedCity={selectedCity}
+                onSelectCity={setSelectedCityId}
+              />
+            </div>
           </motion.section>
 
-          <motion.section variants={sectionVariants} className="grid gap-4 xl:grid-cols-5">
-            <div className="xl:col-span-3">
+          <motion.section variants={sectionVariants} className="grid gap-4 xl:grid-cols-12">
+            <div className="xl:col-span-7">
               <MapPreview
-                cities={cityCatalog}
+                cities={dashboardCities}
                 selectedCity={selectedCity}
                 hotspots={allHotspots}
                 selectedHotspots={selectedInsight?.hotspots || []}
                 onSelectCity={setSelectedCityId}
               />
             </div>
-            <div className="xl:col-span-2">
+            <div className="xl:col-span-5">
               <AnimatePresence mode="wait">
                 {loading && selectedCityId ? (
                   <motion.div
@@ -213,7 +197,7 @@ export default function App({ darkMode, onToggleDarkMode }) {
             ) : (
               <motion.div key="recommendation-content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <TreeRecommendationsPanel
-                  recommendations={visibleRecommendations}
+                  recommendations={selectedCityId ? visibleRecommendations : []}
                   isPersonalized={Boolean(selectedCityId)}
                   selectedCityName={selectedCity?.name}
                   onOpenTreeDetails={openTreeDetails}
@@ -221,6 +205,24 @@ export default function App({ darkMode, onToggleDarkMode }) {
               </motion.div>
             )}
           </AnimatePresence>
+
+          <motion.section variants={sectionVariants} className="border border-slate-300 bg-white px-4 py-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white md:text-base">Area Analyzer</h3>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                  Open the dedicated analyzer screen to review exact planting pockets and excluded concrete/building zones.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => navigate("/area-analyzer")}
+                className="border border-brand-700 bg-brand-700 px-3 py-2 text-xs font-semibold text-white transition hover:bg-brand-800"
+              >
+                Open Area Analyzer
+              </button>
+            </div>
+          </motion.section>
 
           {selectedCity && selectedInsight && (
             <motion.section variants={sectionVariants} className="space-y-4">

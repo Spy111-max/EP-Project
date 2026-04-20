@@ -34,12 +34,12 @@ export default function Navbar({ darkMode, onToggleDarkMode, cityCount }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-brand-900 bg-slate-950 text-slate-100 shadow-[0_8px_30px_-24px_rgba(15,23,42,0.95)] transition-colors duration-300">
-      <div className="border-b border-slate-700 bg-brand-900 px-4 py-1.5 text-[11px] md:px-6">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3">
-          <div className="flex items-center gap-2 font-semibold uppercase tracking-[0.16em] text-slate-100">
+    <header className="sticky top-0 z-50 isolate border-b border-brand-900 bg-[#12243f] text-slate-100 shadow-[0_14px_36px_-28px_rgba(2,6,23,0.95)] transition-colors duration-300">
+      <div className="border-b border-slate-700 bg-brand-700 px-4 py-1.5 text-[11px] md:px-6">
+        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-3">
+            <div className="flex items-center gap-2 font-semibold uppercase tracking-[0.16em] text-slate-100">
             <ShieldCheck className="h-3.5 w-3.5" />
-            Forestry & Climate Department
+              Forestry & Climate Department
           </div>
           <div className="hidden items-center gap-2 text-slate-200 md:flex">
             <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-stable-600" />
@@ -54,21 +54,21 @@ export default function Navbar({ darkMode, onToggleDarkMode, cityCount }) {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-3 md:px-6">
+      <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-3 md:px-6">
         <div className="flex items-center gap-3">
           <motion.div
             initial={{ rotate: -10, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="grid h-11 w-11 place-content-center border border-brand-500 bg-brand-700 text-white shadow-card"
+            className="grid h-12 w-12 place-content-center border border-brand-400 bg-brand-700 text-white shadow-card"
           >
             <motion.div animate={{ y: [0, -1, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}>
               <ShieldCheck className="h-5 w-5" />
             </motion.div>
           </motion.div>
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Data Monitor</p>
-            <h1 className="text-base font-bold text-white md:text-lg">Environmental Monitoring Dashboard</h1>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-300">Command Center</p>
+              <h1 className="text-base font-bold text-white md:text-lg">Environmental Monitoring Dashboard</h1>
             <p className="text-[11px] text-slate-300">Home &gt; Data &amp; Statistics &gt; Air Quality &amp; Reforestation</p>
           </div>
         </div>

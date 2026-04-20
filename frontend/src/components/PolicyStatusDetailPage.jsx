@@ -39,7 +39,7 @@ export default function PolicyStatusDetailPage({ darkMode, onToggleDarkMode, cit
 
           <div className="space-y-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
             <p>{policyStatusGuide.definition}</p>
-            <p>The current national cycle is marked as {policyStatusGuide.currentNationalStatus}.</p>
+            <p>The current cycle is marked as {policyStatusGuide.currentCycleStatus}.</p>
             <p>
               Status progression typically moves from planning to phase-based execution and then into stabilization, where survival and compliance are tracked continuously.
             </p>

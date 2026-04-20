@@ -19,16 +19,16 @@ export default function AreaOverviewReport({ city, insight, recommendations }) {
       animate={{ opacity: 1, y: 0 }}
       whileHover={cardHover}
       transition={{ duration: 0.28 }}
-      className="border border-slate-300 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+      className="border border-slate-300 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900"
     >
-      <div className="flex flex-wrap items-start justify-between gap-3">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-950/40">
         <div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-white md:text-base">Area Overview Report</h3>
           <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Paragraph-based summary for the selected area.</p>
         </div>
       </div>
 
-      <div className="mt-4 space-y-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
+      <div className="space-y-3 px-4 py-4 text-sm leading-6 text-slate-600 dark:text-slate-300">
         <p>{summaryParagraph}</p>
         <p>
           Recommended species for this area are prioritized for pollutant absorption, local climate fit, and long-term canopy
@@ -44,7 +44,7 @@ export default function AreaOverviewReport({ city, insight, recommendations }) {
         </p>
       </div>
 
-      <div className="mt-4 flex justify-end">
+      <div className="flex justify-end border-t border-slate-200 px-4 py-4 dark:border-slate-700">
         <button
           type="button"
           onClick={() =>

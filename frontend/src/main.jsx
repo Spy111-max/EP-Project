@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import App from "./App";
 import AppErrorBoundary from "./components/AppErrorBoundary";
 import AQIDetailPage from "./components/AQIDetailPage";
+import AreaAnalyzerDetailPage from "./components/AreaAnalyzerDetailPage";
 import ForestCoverageDetailPage from "./components/ForestCoverageDetailPage";
 import PolicyStatusDetailPage from "./components/PolicyStatusDetailPage";
 import PollutantDetailPage from "./components/PollutantDetailPage";
@@ -37,6 +38,7 @@ function RoutedApp() {
 			<Routes>
 				<Route path="/" element={<App darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />} />
 				<Route path="/aqi" element={<AQIDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />} />
+				<Route path="/area-analyzer" element={<AreaAnalyzerDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />} />
 				<Route
 					path="/forest-coverage"
 					element={<ForestCoverageDetailPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} cityCount={cityCatalog.length} />}

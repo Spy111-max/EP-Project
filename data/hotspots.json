@@ -207,6 +207,39 @@
       "soil": "black",
       "rainfall_mm": 960,
       "temperature_c": 28
+    },
+    "site_constraints": {
+      "plantable_ratio": 0.34,
+      "impervious_ratio": 0.54,
+      "building_footprint_ratio": 0.12,
+      "utility_clearance_score": 0.71
+    }
+  },
+  {
+    "id": "zone-pune-kothrud-01",
+    "name": "Kothrud Urban Cluster",
+    "city": "Pune",
+    "country": "India",
+    "lat": 18.5074,
+    "lon": 73.8077,
+    "zone_type": "residential",
+    "pollution": {
+      "pm25": 76,
+      "pm10": 128,
+      "nox": 58,
+      "sox": 31,
+      "co2": 562
+    },
+    "environment": {
+      "soil": "black",
+      "rainfall_mm": 945,
+      "temperature_c": 28
+    },
+    "site_constraints": {
+      "plantable_ratio": 0.29,
+      "impervious_ratio": 0.59,
+      "building_footprint_ratio": 0.26,
+      "utility_clearance_score": 0.64
     }
   },
   {

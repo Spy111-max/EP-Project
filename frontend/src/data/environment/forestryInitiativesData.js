@@ -29,9 +29,9 @@ export const ngoLinks = [
 
 export const plantationProgramLinks = [
   { name: "Nagar Van Yojana (MoEFCC)", url: "https://moef.gov.in/en/division/forest-division/" },
-  { name: "National Mission for a Green India", url: "https://www.greenindiamission.in/" },
+  { name: "Green India Mission", url: "https://www.greenindiamission.in/" },
   { name: "Compensatory Afforestation Fund (CAMPA)", url: "https://parivesh.nic.in/" },
-  { name: "National Afforestation Programme", url: "https://dfe.gov.in/" },
+  { name: "Afforestation Programme", url: "https://dfe.gov.in/" },
   { name: "Ek Ped Maa Ke Naam", url: "https://merilife.nic.in/" },
   { name: "Cauvery Calling Plantation Drive", url: "https://isha.sadhguru.org/ca/en/cauvery-calling" },
   { name: "Telangana Haritha Haram", url: "https://harithaharam.telangana.gov.in/" },
@@ -43,7 +43,7 @@ export const plantationProgramLinks = [
 export const policyStatusGuide = {
   definition:
     "Policy Status indicates the present phase of environmental implementation in each city, combining administrative readiness, plantation execution state, and monitoring continuity.",
-  currentNationalStatus:
+  currentCycleStatus:
     "Active - Phase 2 (2026 Enforcement Cycle)",
   statusScale:
     [
